@@ -137,7 +137,7 @@
       .nav-link {
         height: 34px;
 
-        padding: 0 27px;
+        padding: 0 7px;
 
         display: flex;
         align-items: center;
@@ -185,9 +185,9 @@
 
         background: white;
 
-        border: 3px solid #000000;
+        border: 1px solid #000000;
 
-        border-radius: 21px;
+        border-radius: 7px;
 
         overflow: hidden;
 
@@ -322,7 +322,14 @@
           border 0.2s,
           box-shadow 0.2s;
       }
-
+      @media (max-width: 768px) {
+    .field input {
+        width: 100%;
+    }
+        .field select {
+        width: 100%;
+    }
+}
       .field input {
         padding: 0 22px 0 80px;
       }
@@ -416,7 +423,7 @@
 ===================================================== */
 
       .form-actions {
-        margin-top: 30px;
+        margin: 10px;
 
         display: flex;
         align-items: center;
@@ -863,15 +870,16 @@
             <!-- ACTIONS -->
 
             <div class="form-actions">
-              <button type="button" class="clear-btn" onclick="clearForm()">
-                Clear Form
-              </button>
-
               <button type="submit" class="submit-btn">
                 <span class="check"> ✓ </span>
 
                 Record Cash Payment
               </button>
+              <button type="button" class="clear-btn" onclick="clearForm()">
+                Clear Form
+              </button>
+
+              
             </div>
           </form>
         </div>
