@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Prakash Public School - Cash Fee Management</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        width: 100%;
+        min-height: 100%;
+      }
+
+      body {
+        width: 100%;
+        min-height: 100vh;
+
+        font-family: Arial, Helvetica, sans-serif;
+
+        background: #eef3f7;
+        color: #102b46;
+
+        /* IMPORTANT:
+       If browser is running at 125% zoom,
+       this keeps the UI at the intended visual size.
+    */
+        zoom: 0;
+      }
+
+      /* =====================================================
+   HEADER
+===================================================== */
+
+      .top-header {
+        height: 50px;
+
+        background: #091b2b;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 40px;
+
+        border-bottom: 1px solid #263747;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .school-logo {
+        width: 30px;
+        height: 30px;
+
+        background: #20c56d;
+        border-radius: 2px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .school-logo svg {
+        width: 30px;
+        height: 30px;
+
+        fill: none;
+        stroke: white;
+        stroke-width: 2.5;
+      }
+
+      .brand-title {
+        color: white;
+
+        font-size: 18px;
+        font-weight: 700;
+
+        line-height: 1.1;
+      }
+
+      .brand-subtitle {
+        color: #c9d4df;
+
+        font-size: 10px;
+
+        margin-top: 5px;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+
+        gap: 22px;
+      }
+
+      .logout {
+        height: 32px;
+
+        padding: 0 25px;
+        border: none;
+        border-radius: 12px;
+        background: #e11212;
+        color: white;
+        font-size: 10px;
+        cursor: pointer;
+      }
+
+      .logout:hover {
+        background: #db4146;
+      }
+
+      /* =====================================================
+   NAVIGATION
+===================================================== */
+
+      .navbar {
+        height: 34px;
+
+        display: flex;
+        align-items: center;
+
+        padding-left: 38px;
+
+        border-bottom: 1px solid #263747;
+      }
+
+      .nav-link {
+        height: 22px;
+
+        padding: 0 27px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 14px;
+
+        color: #020202;
+
+        text-decoration: none;
+
+        font-size: 9px;
+      }
+
+      .nav-link.active {
+        background: #132637;
+        color: white;
+        border-top-color: #e9eef3;
+        border-bottom-color: #e9eef3;
+        border-radius: 12px;
+      }
+
+      .nav-icon {
+        width: 14px;
+        height: 14px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      /* =====================================================
+   MAIN
+===================================================== */
+
+      main {
+        min-height: calc(100vh - 276px);
+        padding: 10px;
+      }
+
+      .payment-card {
+        width: 100%;
+
+        max-width: 1000px;
+        margin: 0 auto;
+
+        background: white;
+
+        border: 3px solid #000000;
+
+        border-radius: 21px;
+
+        overflow: hidden;
+
+        box-shadow: 0 7px 22px rgba(17, 40, 62, 0.07);
+      }
+
+      /* =====================================================
+   CARD HEADER
+===================================================== */
+
+      .card-header {
+        min-height: 10px;
+        font-size: 12px;
+        padding: 10px 20px;
+        align-items: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 25px;
+
+        border-bottom: 1px solid #d7dfe8;
+      }
+
+      .card-heading {
+        display: flex;
+        align-items: center;
+
+        gap: 22px;
+      }
+      .card-heading p {
+        font-size: 20px;
+
+        color: #60758d;
+      }
+
+      .warning {
+        height: 54px;
+
+        padding: 0 6px;
+
+        background: #fff4d9;
+
+        border: 1px solid #efca68;
+
+        border-radius: 14px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+
+        color: #9a6507;
+
+        font-size: 14px;
+
+        white-space: nowrap;
+      }
+
+      .warning-dot {
+        width: 10px;
+        height: 10px;
+
+        background: #b4770c;
+
+        border-radius: 50%;
+      }
+
+      /* =====================================================
+   FORM
+===================================================== */
+
+      .form-body {
+        padding: 8px 30px 21px;
+      }
+
+      .form-grid {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        column-gap: 40px;
+        row-gap: 30px;
+      }
+
+      .form-group {
+
+            min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+      }
+
+      label {
+        display: block;
+
+        margin-bottom: 11px;
+
+        color: #193653;
+
+        font-size: 18px;
+
+        text-transform: uppercase;
+        flex: 0 0 180px;
+    margin-bottom: 0;
+      }
+
+      .field {
+        flex: 1;
+        position: relative;
+      }
+
+      .field input,
+      .field select {
+        width: 100%;
+        height: 42px;
+
+        border: 2px solid #d5dee8;
+
+        border-radius: 10px;
+
+        outline: none;
+
+        background: white;
+
+        color: #29445f;
+
+        font-family: inherit;
+
+        font-size: 18px;
+
+        transition:
+          border 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .field input {
+        padding: 0 22px 0 80px;
+      }
+
+      .field select {
+        padding: 0 60px 0 28px;
+
+        appearance: none;
+
+        cursor: pointer;
+
+        color: #8298ae;
+      }
+
+      .field input::placeholder {
+        color: #8298ae;
+      }
+
+      .field input:focus,
+      .field select:focus {
+        border-color: #20c56d;
+
+        box-shadow: 0 0 0 4px rgba(32, 197, 109, 0.1);
+      }
+
+      /* =====================================================
+   INPUT ICONS
+===================================================== */
+
+      .input-icon {
+        position: absolute;
+
+        left: 25px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        width: 25px;
+        height: 25px;
+
+        stroke: #8195aa;
+
+        fill: none;
+
+        stroke-width: 1.8;
+
+        pointer-events: none;
+      }
+
+      .currency {
+        position: absolute;
+
+        left: 25px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        color: #8195aa;
+
+        font-size: 22px;
+
+        font-weight: 700;
+
+        pointer-events: none;
+      }
+
+      .amount {
+        padding-left: 72px !important;
+      }
+
+      .select-arrow {
+        position: absolute;
+
+        right: 27px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        width: 0;
+        height: 0;
+
+        border-left: 13px solid transparent;
+        border-right: 13px solid transparent;
+        border-top: 14px solid #62768d;
+
+        pointer-events: none;
+      }
+
+      /* =====================================================
+   ACTIONS
+===================================================== */
+
+      .form-actions {
+        margin-top: 30px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .clear-btn {
+        height: 38px;
+
+        padding: 0 33px;
+
+        border: 1px solid #d5dee8;
+
+        border-radius: 15px;
+
+        background: rgb(170, 169, 169);
+
+        color: #000000;
+
+        font-size: 12px;
+
+        cursor: pointer;
+      }
+
+      .clear-btn:hover {
+        background: #f7f9fb;
+      }
+
+      .submit-btn {
+        height: 38px;
+
+        min-width: 105px;
+
+        padding: 0 10px;
+
+        border: 1px solid #0eab58;
+
+        border-radius: 15px;
+
+        background: #20c56d;
+
+        color: white;
+
+        font-size: 12px;
+
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 15px;
+      }
+
+      .submit-btn:hover {
+        background: #16b760;
+      }
+
+      .check {
+        font-size: 10px;
+
+        line-height: 1;
+      }
+
+      /* =====================================================
+   FOOTER
+===================================================== */
+
+      footer {
+        min-height: 63px;
+
+        background: #091b2b;
+
+        color: #b9c6d5;
+
+        padding: 0 26px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        font-size: 18px;
+      }
+
+      /* =====================================================
+   SCROLL TOP
+===================================================== */
+
+      .scroll-top {
+        position: fixed;
+
+        right: 27px;
+        bottom: 20px;
+
+        width: 53px;
+        height: 53px;
+
+        border-radius: 50%;
+
+        border: 1px solid #334557;
+
+        background: #0a1d2e;
+
+        color: white;
+
+        font-size: 30px;
+
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* =====================================================
+   RESPONSIVE
+===================================================== */
+
+      @media (max-width: 1100px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card-header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .warning {
+          white-space: normal;
+        }
+      }
+
+      @media (max-width: 700px) {
+        body {
+          zoom: 1;
+        }
+
+        .top-header {
+          height: auto;
+
+          padding: 20px;
+
+          flex-direction: column;
+
+          align-items: flex-start;
+
+          gap: 20px;
+        }
+
+        .header-right {
+          width: 100%;
+        }
+
+        .teacher {
+          flex: 1;
+
+          font-size: 15px;
+        }
+
+        .logout {
+          flex-shrink: 0;
+
+          font-size: 15px;
+        }
+
+        .navbar {
+          padding-left: 10px;
+
+          overflow-x: auto;
+        }
+
+        .nav-link {
+          white-space: nowrap;
+
+          font-size: 16px;
+        }
+
+        main {
+          padding: 20px 12px;
+        }
+
+        .card-header {
+          padding: 22px;
+        }
+
+        .form-body {
+          padding: 25px 20px;
+        }
+
+        .card-heading h2 {
+          font-size: 21px;
+        }
+
+        .card-heading p {
+          font-size: 14px;
+        }
+
+        label {
+          font-size: 15px;
+        }
+
+        .field input,
+        .field select {
+          height: 60px;
+
+          font-size: 17px;
+        }
+
+        .form-actions {
+          flex-direction: column;
+
+          gap: 14px;
+        }
+
+        .clear-btn,
+        .submit-btn {
+          width: 100%;
+        }
+
+        footer {
+          padding: 15px;
+
+          gap: 8px;
+
+          text-align: center;
+
+          flex-direction: column;
+
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- =====================================================
+     HEADER
+===================================================== -->
+
+    <header class="top-header">
+      <div class="brand">
+        <div class="school-logo">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="16" rx="2" />
+            <rect x="8" y="8" width="8" height="8" />
+          </svg>
+        </div>
+
+        <div>
+          <div class="brand-title">Prakash Public School</div>
+
+          <div class="brand-subtitle">Cash Fee Management System</div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="logout" onclick="logout()">⇥ &nbsp; Logout</button>
+      </div>
+    </header>
+
+    <!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+    <nav class="navbar">
+      <a href="#" class="nav-link active">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="8" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+
+        Create Payment
+      </a>
+
+      <a href="#" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <rect x="4" y="5" width="16" height="14" rx="1" />
+
+          <line x1="8" y1="9" x2="17" y2="9" />
+          <line x1="8" y1="12" x2="17" y2="12" />
+          <line x1="8" y1="15" x2="17" y2="15" />
+        </svg>
+
+        Submitted Fees History &amp; Handover
+      </a>
+    </nav>
+
+    <!-- =====================================================
+     MAIN
+===================================================== -->
+
+    <main>
+      <section class="payment-card">
+        <!-- CARD HEADER -->
+
+        <div class="card-header">
+          <div class="warning">
+            <span class="warning-dot"></span>
+
+            Original entry amounts are non-editable after save.
+          </div>
+        </div>
+
+        <!-- FORM -->
+
+        <div class="form-body">
+          <form id="paymentForm">
+            <div class="form-grid">
+              <!-- STUDENT -->
+
+              <div class="form-group">
+                <label> Student Name * </label>
+
+                <div class="field">
+                  <svg class="input-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="7" r="3" />
+
+                    <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+                  </svg>
+
+                  <input
+                    type="text"
+                    id="studentName"
+                    placeholder="e.g. Aarav Sharma"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- FATHER -->
+
+              <div class="form-group">
+                <label> Father Name * </label>
+
+                <div class="field">
+                  <svg class="input-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="7" r="3" />
+
+                    <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+                  </svg>
+
+                  <input
+                    type="text"
+                    id="fatherName"
+                    placeholder="e.g. Rajesh Sharma"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- CLASS -->
+
+              <div class="form-group">
+                <label> Class &amp; Section * </label>
+
+                <div class="field">
+                  <select id="classSection" required>
+                    <option value="">Select Class &amp; Section</option>
+
+                    <option>Class 1 - A</option>
+                    <option>Class 1 - B</option>
+                    <option>Class 2 - A</option>
+                    <option>Class 2 - B</option>
+                    <option>Class 3 - A</option>
+                    <option>Class 3 - B</option>
+                    <option>Class 4 - A</option>
+                    <option>Class 4 - B</option>
+                    <option>Class 5 - A</option>
+                    <option>Class 5 - B</option>
+                    <option>Class 6 - A</option>
+                    <option>Class 6 - B</option>
+                    <option>Class 7 - A</option>
+                    <option>Class 7 - B</option>
+                    <option>Class 8 - A</option>
+                    <option>Class 8 - B</option>
+                    <option>Class 9 - A</option>
+                    <option>Class 9 - B</option>
+                    <option>Class 10 - A</option>
+                    <option>Class 10 - B</option>
+                    <option>Class 11 - A</option>
+                    <option>Class 11 - B</option>
+                    <option>Class 12 - A</option>
+                    <option>Class 12 - B</option>
+                  </select>
+
+                  <span class="select-arrow"></span>
+                </div>
+              </div>
+
+              <!-- AMOUNT -->
+
+              <div class="form-group">
+                <label> Amount Collected (₹) * </label>
+
+                <div class="field">
+                  <span class="currency"> ₹ </span>
+
+                  <input
+                    class="amount"
+                    type="number"
+                    id="amount"
+                    min="1"
+                    placeholder="e.g. 2500"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- ROLL -->
+
+              <div class="form-group">
+                <label> Roll No. * </label>
+
+                <div class="field">
+                  <svg class="input-icon" viewBox="0 0 24 24">
+                    <rect x="6" y="6" width="12" height="12" rx="1" />
+
+                    <rect x="9" y="9" width="6" height="6" />
+                  </svg>
+
+                  <input
+                    type="text"
+                    id="rollNo"
+                    placeholder="Auto-filled after student selection"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <!-- PAYER -->
+
+              <div class="form-group">
+                <label> Payer Name * </label>
+
+                <div class="field">
+                  <svg class="input-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="7" r="3" />
+
+                    <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+                  </svg>
+
+                  <input
+                    type="text"
+                    id="payerName"
+                    placeholder="e.g. Ramesh Sharma"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- ACTIONS -->
+
+            <div class="form-actions">
+              <button type="button" class="clear-btn" onclick="clearForm()">
+                Clear Form
+              </button>
+
+              <button type="submit" class="submit-btn">
+                <span class="check"> ✓ </span>
+
+                Record Cash Payment
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- =====================================================
+     FOOTER
+===================================================== -->
+
+    <footer>
+      <div>
+        Green World School ERP • Core Cash Fee Collection &amp; Handover
+        Prototype
+      </div>
+
+      <div>Strict Traceability Enabled • No Partial Processing Rule</div>
+    </footer>
+
+    <!-- SCROLL TOP -->
+
+    <button
+      class="scroll-top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      ↑
+    </button>
+
+    <script>
+      const form = document.getElementById("paymentForm");
+
+      const studentName = document.getElementById("studentName");
+
+      const rollNo = document.getElementById("rollNo");
+
+      // Demo student -> roll number
+      studentName.addEventListener("input", function () {
+        if (this.value.trim().length >= 3) {
+          rollNo.value = "Auto-filled";
+        } else {
+          rollNo.value = "";
+        }
+      });
+
+      // Clear
+      function clearForm() {
+        form.reset();
+
+        rollNo.value = "";
+      }
+
+      // Submit
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const student = document.getElementById("studentName").value;
+
+        const amount = document.getElementById("amount").value;
+
+        alert(
+          "Cash payment recorded successfully.\n\n" +
+            "Student: " +
+            student +
+            "\n" +
+            "Amount: ₹" +
+            amount,
+        );
+      });
+
+      // Logout
+      function logout() {
+        const confirmed = confirm("Are you sure you want to logout?");
+
+        if (confirmed) {
+          alert("Logged out successfully.");
+        }
+      }
+    </script>
+  </body>
+</html>
