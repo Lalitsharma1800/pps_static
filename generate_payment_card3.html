@@ -124,18 +124,18 @@
 ===================================================== */
 
       .navbar {
-        height: 34px;
+        height: 54px;
 
         display: flex;
         align-items: center;
 
-        padding-left: 38px;
+        padding-left: 6px;
 
-        border-bottom: 1px solid #263747;
+        border-bottom: 1px solid #010101;
       }
 
       .nav-link {
-        height: 22px;
+        height: 34px;
 
         padding: 0 27px;
 
@@ -143,12 +143,12 @@
         align-items: center;
 
         gap: 14px;
-
+        border: 1px solid #000000;
+        border-radius: 12px;
+        margin-left: 5px;
         color: #020202;
-
         text-decoration: none;
-
-        font-size: 9px;
+        font-size: 20px;
       }
 
       .nav-link.active {
@@ -225,7 +225,7 @@
       }
 
       .warning {
-        height: 54px;
+        height: 36px;
 
         padding: 0 6px;
 
@@ -246,7 +246,12 @@
 
         white-space: nowrap;
       }
-
+      /* Small screen */
+@media (max-width: 768px) {
+    .warning {
+        height: 54px;
+    }
+}
       .warning-dot {
         width: 10px;
         height: 10px;
@@ -283,7 +288,7 @@
 
         margin-bottom: 11px;
 
-        color: #193653;
+        color: #000000;
 
         font-size: 18px;
 
@@ -296,8 +301,8 @@
 
       .field input,
       .field select {
-        width: 100%;
-        height: 42px;
+        width: 70%;
+        height: 32px;
 
         border: 2px solid #d5dee8;
 
@@ -307,11 +312,11 @@
 
         background: white;
 
-        color: #29445f;
+        color: #070707;
 
         font-family: inherit;
 
-        font-size: 18px;
+        font-size: 14px;
 
         transition:
           border 0.2s,
@@ -329,11 +334,11 @@
 
         cursor: pointer;
 
-        color: #8298ae;
+        color: #4d545b;
       }
 
       .field input::placeholder {
-        color: #8298ae;
+        color: #4d545b;
       }
 
       .field input:focus,
@@ -688,15 +693,7 @@
       </a>
 
       <a href="#" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24">
-          <rect x="4" y="5" width="16" height="14" rx="1" />
-
-          <line x1="8" y1="9" x2="17" y2="9" />
-          <line x1="8" y1="12" x2="17" y2="12" />
-          <line x1="8" y1="15" x2="17" y2="15" />
-        </svg>
-
-        Submitted Fees History &amp; Handover
+        History &amp; Handover
       </a>
     </nav>
 
@@ -798,8 +795,6 @@
                     <option>Class 12 - A</option>
                     <option>Class 12 - B</option>
                   </select>
-
-                  <span class="select-arrow"></span>
                 </div>
               </div>
 
