@@ -180,6 +180,7 @@
   th.col-sn { width: 48px; }
   th.col-cls, td.col-cls { width: 74px; }
   th.col-amt, td.col-amt { width: 72px; }
+  th.col-payer, td.col-payer { width: 110px; }
   th.num.col-amt, td.num.col-amt { text-align: center; }
   .name-last { display: block; }
   th.col-status, td.col-status { width: 112px; }
@@ -547,10 +548,8 @@
       const tr = document.createElement("tr");
       const badgeCls = h.status === "Accepted" ? "badge" : "badge pending";
       // First name and last name always on separate lines
-      const nameParts = h.student.trim().split(/\s+/);
-      const nameHtml = nameParts.length > 1
-        ? escapeHtml(nameParts[0]) + '<span class="name-last">' + escapeHtml(nameParts.slice(1).join(" ")) + "</span>"
-        : escapeHtml(nameParts[0]);
+      const nameHtml = splitName(h.student);
+      const payerHtml = splitName(h.payer);
       tr.className = "row-click";
       tr.tabIndex = 0;
       tr.innerHTML = `
@@ -559,7 +558,7 @@
         <td class="col-cls">${shortCls(h.cls)}</td>
         <td class="col-stu">${nameHtml}</td>
         <td class="col-opt col-roll">${escapeHtml(h.roll)}</td>
-        <td class="col-opt col-payer">${escapeHtml(h.payer)}</td>
+        <td class="col-opt col-payer">${payerHtml}</td>
         <td class="num col-amt">${h.amount.toLocaleString("en-IN")}</td>
         <td class="col-status"><span class="${badgeCls}">${h.status}</span></td>`;
       tr.addEventListener("click", () => openDetail(i));
@@ -576,6 +575,13 @@
 
   function escapeHtml(str) {
     return str.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  // Splits "First Last Name" into first word and rest on separate lines
+  function splitName(name) {
+    const parts = String(name).trim().split(/\s+/);
+    if (parts.length < 2) return escapeHtml(parts[0] || "");
+    return escapeHtml(parts[0]) + '<span class="name-last">' + escapeHtml(parts.slice(1).join(" ")) + "</span>";
   }
 
   // "Class 3 - A" -> "3-A" to keep the table column narrow
