@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login - Prakash Public School</title>
+<style>
+  :root {
+    --navy: #141b2d;
+    --action: #1d3a5f;
+    --gold: #d1992b;
+    --bg: #f4f6fa;
+    --card: #ffffff;
+    --line: #dfe4ee;
+    --text: #141b2d;
+    --muted: #6a7488;
+    --err: #b3261e;
+    --err-bg: #fdeceb;
+    --err-line: #f2c4c1;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { font-size: 14px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Roboto, "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    line-height: 1.45;
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; flex-direction: column;
+  }
+
+  /* Header */
+  .topbar { background: var(--navy); border-bottom: 2px solid var(--gold); }
+  .topbar-inner {
+    max-width: 1200px; margin: 0 auto; padding: 10px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .logo {
+    flex: none; width: 38px; height: 38px;
+    background: #fff; color: var(--navy); border-radius: 3px;
+    display: grid; place-items: center;
+    font-family: Georgia, "Times New Roman", serif; font-weight: 700; font-size: 14px;
+  }
+  .brand h1 {
+    margin: 0; font-family: Georgia, "Times New Roman", serif;
+    font-size: 19px; font-weight: 700; color: #fff; line-height: 1.2;
+  }
+  .brand p { margin: 1px 0 0; font-size: 12px; color: #b9c1d4; }
+  .help {
+    font: inherit; font-size: 13px; font-weight: 600;
+    color: var(--gold); background: transparent;
+    border: 1px solid var(--gold); border-radius: 3px;
+    padding: 7px 14px; cursor: pointer; white-space: nowrap;
+    text-decoration: none; display: inline-block;
+  }
+  .help:hover { background: rgba(209,153,43,.14); }
+  .help:active { background: rgba(209,153,43,.24); }
+
+  /* Page */
+  main {
+    flex: 1; width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    padding: 32px 16px 40px;
+  }
+  .wrap { width: 100%; max-width: 330px; }
+  .page-title { text-align: center; margin-bottom: 14px; }
+  .page-title h2 { margin: 0 0 3px; font-size: 21px; font-weight: 700; }
+  .page-title p { margin: 0; color: var(--muted); font-size: 13px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    border-radius: 5px;
+    padding: 16px 16px 14px;
+  }
+
+  .alert {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: var(--err-bg); border: 1px solid var(--err-line); color: var(--err);
+    border-radius: 3px; padding: 10px 12px; font-size: 13px; font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .alert[hidden] { display: none; }
+  .alert::before {
+    content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--err); margin-top: 5px;
+  }
+
+  .field { margin-bottom: 12px; }
+  .field label { display: block; margin-bottom: 4px; font-size: 12.5px; font-weight: 700; }
+  .req { color: var(--err); }
+  .input-wrap { position: relative; }
+  input[type="text"], input[type="password"] {
+    width: 100%; height: 38px;
+    font: inherit; font-size: 16px; color: var(--text);
+    background: #fff; border: 1px solid #b9c1d4; border-radius: 3px;
+    padding: 0 10px;
+  }
+  input::placeholder { color: #8d95a6; }
+  input:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+  input[aria-invalid="true"] { border-color: var(--err); }
+  .has-toggle input { padding-right: 56px; }
+  .toggle {
+    position: absolute; top: 3px; right: 3px; height: 32px; min-width: 48px;
+    font: inherit; font-size: 12.5px; font-weight: 600; color: var(--action);
+    background: transparent; border: 0; border-radius: 3px; cursor: pointer;
+    -webkit-user-select: none; user-select: none; touch-action: manipulation;
+  }
+  .toggle:hover { background: #eef1f7; }
+  .toggle:active { background: #e3e8f1; }
+  .toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+  .msg { margin: 5px 0 0; font-size: 12.5px; color: var(--err); }
+  .msg[hidden] { display: none; }
+  .hint { margin: 5px 0 0; font-size: 12.5px; color: #8a5a00; }
+  .hint[hidden] { display: none; }
+
+  .submit {
+    width: 100%; height: 40px; margin-top: 4px;
+    font: inherit; font-size: 14px; font-weight: 700; color: #fff;
+    background: var(--action); border: 0; border-radius: 3px; cursor: pointer;
+    -webkit-appearance: none; appearance: none; touch-action: manipulation;
+  }
+  .submit:hover { background: #17304f; }
+  .submit:active { background: #12263f; }
+  .submit:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .submit:disabled { opacity: .7; cursor: default; }
+
+  .assist {
+    margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--muted); text-align: center;
+  }
+  .assist a { color: var(--action); font-weight: 600; text-decoration: none; }
+  .assist a:hover { text-decoration: underline; }
+  .note { margin: 14px 0 0; text-align: center; font-size: 12px; color: var(--muted); }
+
+  footer { background: var(--navy); color: #aab3c8; font-size: 12px; }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto; padding: 12px 24px;
+    display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  }
+  footer b { color: #fff; font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .topbar-inner, .footer-inner { padding-left: 14px; padding-right: 14px; }
+    .brand p { display: none; }
+    main { align-items: flex-start; padding-top: 24px; }
+    .page-title h2 { font-size: 20px; }
+    .card { padding: 14px 14px 12px; }
+  }
+  @media (max-width: 380px) {
+    .topbar-inner { gap: 8px; padding-left: 10px; padding-right: 10px; }
+    .brand { gap: 8px; }
+    .logo { width: 32px; height: 32px; font-size: 12px; }
+    .brand h1 { font-size: 15px; }
+    .help { padding: 6px 9px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="logo">PPS</div>
+      <div>
+        <h1>Prakash Public School</h1>
+        <p>Cash Fee Management System</p>
+      </div>
+    </div>
+    <a class="help" href="#" id="helpLink">Help / Support</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="page-title">
+      <h2>Login</h2>
+      <p>Sign in with the username and password given by the school.</p>
+    </div>
+
+    <form class="card" id="form" novalidate>
+      <div class="alert" id="formError" role="alert" hidden></div>
+
+      <div class="field">
+        <label for="username">Username <span class="req">*</span></label>
+        <input type="text" id="username" name="username" placeholder="Enter your username"
+               autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"
+               aria-describedby="usernameMsg">
+        <p class="msg" id="usernameMsg" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="password">Password <span class="req">*</span></label>
+        <div class="input-wrap has-toggle">
+          <input type="password" id="password" name="password" placeholder="Enter your password"
+                 autocomplete="current-password" aria-describedby="passwordMsg capsHint">
+          <button class="toggle" id="toggle" type="button" aria-pressed="false" aria-controls="password">Show</button>
+        </div>
+        <p class="msg" id="passwordMsg" hidden></p>
+        <p class="hint" id="capsHint" hidden>Caps Lock is on.</p>
+      </div>
+
+      <button class="submit" id="submit" type="submit">Login</button>
+
+      <p class="assist">Forgot your password? <a href="#" id="forgotLink">Contact the school office</a></p>
+    </form>
+
+    <p class="note">Access is for authorised school staff only.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span><b>Prakash Public School</b> &nbsp;Cash Fee Management System</span>
+    <span>Every payment is traceable from entry to confirmation.</span>
+  </div>
+</footer>
+
+<script>
+  // Page to open after a successful login.
+  const NEXT_PAGE = "prakash-history-handover-v10.html";
+
+  // ------------------------------------------------------------------
+  // DEMO ONLY: this accepts any username and password so the design can
+  // be tried out. Replace the body with a real call to your login
+  // backend (it must resolve on success and reject with an Error whose
+  // message is shown to the user on failure) before using this live.
+  // ------------------------------------------------------------------
+  function authenticate(username, password) {
+    return new Promise(resolve => setTimeout(resolve, 700));
+  }
+
+  const form = document.getElementById("form");
+  const user = document.getElementById("username");
+  const pass = document.getElementById("password");
+  const userMsg = document.getElementById("usernameMsg");
+  const passMsg = document.getElementById("passwordMsg");
+  const formError = document.getElementById("formError");
+  const submitBtn = document.getElementById("submit");
+  const toggle = document.getElementById("toggle");
+  const caps = document.getElementById("capsHint");
+
+  function setFieldError(input, msgEl, text) {
+    if (text) {
+      msgEl.textContent = text;
+      msgEl.hidden = false;
+      input.setAttribute("aria-invalid", "true");
+    } else {
+      msgEl.hidden = true;
+      input.removeAttribute("aria-invalid");
+    }
+  }
+  function showFormError(text) {
+    formError.textContent = text || "";
+    formError.hidden = !text;
+  }
+
+  toggle.addEventListener("click", () => {
+    const show = pass.type === "password";
+    pass.type = show ? "text" : "password";
+    toggle.textContent = show ? "Hide" : "Show";
+    toggle.setAttribute("aria-pressed", String(show));
+    toggle.setAttribute("aria-label", show ? "Hide password" : "Show password");
+    pass.focus();
+  });
+
+  pass.addEventListener("keyup", e => {
+    if (e.getModifierState) caps.hidden = !e.getModifierState("CapsLock");
+  });
+  pass.addEventListener("blur", () => { caps.hidden = true; });
+
+  user.addEventListener("input", () => { setFieldError(user, userMsg, ""); showFormError(""); });
+  pass.addEventListener("input", () => { setFieldError(pass, passMsg, ""); showFormError(""); });
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    showFormError("");
+    const u = user.value.trim();
+    const p = pass.value;
+
+    setFieldError(user, userMsg, u ? "" : "Enter your username.");
+    setFieldError(pass, passMsg, p ? "" : "Enter your password.");
+    if (!u) { user.focus(); return; }
+    if (!p) { pass.focus(); return; }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Signing in…";
+    try {
+      await authenticate(u, p);
+      window.location.href = NEXT_PAGE;
+    } catch (err) {
+      showFormError((err && err.message) || "Incorrect username or password. Try again.");
+      pass.value = "";
+      pass.focus();
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Login";
+    }
+  });
+
+  // Wire these to your support page / contact details.
+  document.getElementById("helpLink").addEventListener("click", e => e.preventDefault());
+  document.getElementById("forgotLink").addEventListener("click", e => e.preventDefault());
+</script>
+</body>
+</html>
