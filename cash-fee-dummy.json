@@ -1,0 +1,482 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "school": "Prakash Public School",
+    "currency": "INR",
+    "description": "Central dummy data for the Cash Fee Management teacher pages and the principal page.",
+    "notes": [
+      "Payments store a snapshot of student fields at entry time (like the original form). studentId links to students[].",
+      "status is 'pending' or 'accepted'. acceptedAt and acceptedBy are null while pending.",
+      "Teacher pages should show only payments where recordedBy equals the logged-in teacher id (t-anil for the teacher module).",
+      "Students 'Priya Singh' (S-004) and 'Priya Singh (sample)' (S-104) are different people with the same first and last name. Keep them separate.",
+      "Class ids use '<class>-<section>' (e.g. '3-B'). Create Payment dropdown only offers section A; classes[].inCreateDropdown shows which ids it can select.",
+      "Times are local school time without a timezone offset.",
+      "Teacher-only records (PAY-2026-010..012) have parentPhone = null because the teacher form does not capture it."
+    ]
+  },
+  "teachers": [
+    {
+      "id": "t-anil",
+      "name": "Anil Verma",
+      "role": "teacher"
+    },
+    {
+      "id": "t-meena",
+      "name": "Meena Sharma",
+      "role": "teacher"
+    },
+    {
+      "id": "t-rakesh",
+      "name": "Rakesh Yadav",
+      "role": "teacher"
+    },
+    {
+      "id": "t-sunita",
+      "name": "Sunita Rao",
+      "role": "teacher"
+    }
+  ],
+  "principal": {
+    "id": "p-001",
+    "name": "Principal",
+    "role": "principal"
+  },
+  "classes": [
+    {
+      "id": "LKG-A",
+      "label": "LKG - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "Nursery-A",
+      "label": "Nursery - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "UKG-A",
+      "label": "UKG - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "1-A",
+      "label": "Class 1 - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "1-B",
+      "label": "Class 1 - B",
+      "inCreateDropdown": false
+    },
+    {
+      "id": "2-A",
+      "label": "Class 2 - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "2-B",
+      "label": "Class 2 - B",
+      "inCreateDropdown": false
+    },
+    {
+      "id": "2-C",
+      "label": "Class 2 - C",
+      "inCreateDropdown": false
+    },
+    {
+      "id": "3-A",
+      "label": "Class 3 - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "3-B",
+      "label": "Class 3 - B",
+      "inCreateDropdown": false
+    },
+    {
+      "id": "4-A",
+      "label": "Class 4 - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "5-A",
+      "label": "Class 5 - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "6-A",
+      "label": "Class 6 - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "6-B",
+      "label": "Class 6 - B",
+      "inCreateDropdown": false
+    },
+    {
+      "id": "7-A",
+      "label": "Class 7 - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "8-A",
+      "label": "Class 8 - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "9-A",
+      "label": "Class 9 - A",
+      "inCreateDropdown": true
+    },
+    {
+      "id": "10-A",
+      "label": "Class 10 - A",
+      "inCreateDropdown": true
+    }
+  ],
+  "students": [
+    {
+      "id": "S-001",
+      "name": "Aarav Mehta",
+      "fatherName": "Sanjay Mehta",
+      "roll": "14",
+      "cls": "3-B"
+    },
+    {
+      "id": "S-002",
+      "name": "Ananya Gupta",
+      "fatherName": "Rajesh Gupta",
+      "roll": "07",
+      "cls": "5-A"
+    },
+    {
+      "id": "S-003",
+      "name": "Rohan Kumar",
+      "fatherName": "Vinod Kumar",
+      "roll": "22",
+      "cls": "2-C"
+    },
+    {
+      "id": "S-004",
+      "name": "Priya Singh",
+      "fatherName": "Mahesh Singh",
+      "roll": "03",
+      "cls": "4-A"
+    },
+    {
+      "id": "S-005",
+      "name": "Kabir Singh",
+      "fatherName": "Harpal Singh",
+      "roll": "11",
+      "cls": "1-A"
+    },
+    {
+      "id": "S-006",
+      "name": "Ishita Jain",
+      "fatherName": "Anil Jain",
+      "roll": "18",
+      "cls": "6-B"
+    },
+    {
+      "id": "S-007",
+      "name": "Vivaan Sharma",
+      "fatherName": "Deepak Sharma",
+      "roll": "09",
+      "cls": "1-B"
+    },
+    {
+      "id": "S-008",
+      "name": "Diya Patel",
+      "fatherName": "Kiran Patel",
+      "roll": "05",
+      "cls": "3-A"
+    },
+    {
+      "id": "S-009",
+      "name": "Arjun Yadav",
+      "fatherName": "Ramesh Yadav",
+      "roll": "16",
+      "cls": "2-A"
+    },
+    {
+      "id": "S-010",
+      "name": "Riya Kapoor",
+      "fatherName": "Deepak Kapoor",
+      "roll": "32",
+      "cls": "5-A"
+    },
+    {
+      "id": "S-011",
+      "name": "Meher Khanna",
+      "fatherName": "Vivek Khanna",
+      "roll": "21",
+      "cls": "2-B"
+    },
+    {
+      "id": "S-012",
+      "name": "Prakash Kumar Gupta Bhadauriya",
+      "fatherName": "Ramchandra Gupta",
+      "roll": "41",
+      "cls": "7-A"
+    },
+    {
+      "id": "S-101",
+      "name": "Aarav Sharma",
+      "fatherName": "Rajesh Sharma",
+      "roll": "101",
+      "cls": "6-A"
+    },
+    {
+      "id": "S-102",
+      "name": "Ananya Verma",
+      "fatherName": "Suresh Verma",
+      "roll": "102",
+      "cls": "6-A"
+    },
+    {
+      "id": "S-103",
+      "name": "Ishaan Gupta",
+      "fatherName": "Manoj Gupta",
+      "roll": "215",
+      "cls": "8-A"
+    },
+    {
+      "id": "S-104",
+      "name": "Priya Singh (sample)",
+      "fatherName": "Vikram Singh",
+      "roll": "310",
+      "cls": "10-A"
+    }
+  ],
+  "payments": [
+    {
+      "id": "PAY-2026-009",
+      "ref": "RCT-20261025-0009",
+      "studentId": "S-001",
+      "studentName": "Aarav Mehta",
+      "fatherName": "Sanjay Mehta",
+      "cls": "3-B",
+      "roll": "14",
+      "payerName": "Sanjay Mehta",
+      "parentPhone": "+91 98765 41009",
+      "amount": 1500,
+      "recordedBy": "t-anil",
+      "recordedAt": "2026-10-25T09:20:00",
+      "status": "pending",
+      "acceptedAt": null,
+      "acceptedBy": null
+    },
+    {
+      "id": "PAY-2026-008",
+      "ref": "RCT-20261024-0008",
+      "studentId": "S-002",
+      "studentName": "Ananya Gupta",
+      "fatherName": "Rajesh Gupta",
+      "cls": "5-A",
+      "roll": "07",
+      "payerName": "Neha Gupta",
+      "parentPhone": "+91 98765 41008",
+      "amount": 2200,
+      "recordedBy": "t-meena",
+      "recordedAt": "2026-10-24T14:45:00",
+      "status": "pending",
+      "acceptedAt": null,
+      "acceptedBy": null
+    },
+    {
+      "id": "PAY-2026-007",
+      "ref": "RCT-20261024-0007",
+      "studentId": "S-003",
+      "studentName": "Rohan Kumar",
+      "fatherName": "Vinod Kumar",
+      "cls": "2-C",
+      "roll": "22",
+      "payerName": "Vinod Kumar",
+      "parentPhone": "+91 98765 41007",
+      "amount": 1200,
+      "recordedBy": "t-anil",
+      "recordedAt": "2026-10-24T10:05:00",
+      "status": "pending",
+      "acceptedAt": null,
+      "acceptedBy": null
+    },
+    {
+      "id": "PAY-2026-006",
+      "ref": "RCT-20261023-0006",
+      "studentId": "S-004",
+      "studentName": "Priya Singh",
+      "fatherName": "Mahesh Singh",
+      "cls": "4-A",
+      "roll": "03",
+      "payerName": "Mahesh Singh",
+      "parentPhone": "+91 98765 41006",
+      "amount": 3500,
+      "recordedBy": "t-rakesh",
+      "recordedAt": "2026-10-23T15:30:00",
+      "status": "pending",
+      "acceptedAt": null,
+      "acceptedBy": null
+    },
+    {
+      "id": "PAY-2026-005",
+      "ref": "RCT-20261023-0005",
+      "studentId": "S-005",
+      "studentName": "Kabir Singh",
+      "fatherName": "Harpal Singh",
+      "cls": "1-A",
+      "roll": "11",
+      "payerName": "Harpal Singh",
+      "parentPhone": "+91 98765 41005",
+      "amount": 5000,
+      "recordedBy": "t-sunita",
+      "recordedAt": "2026-10-23T11:15:00",
+      "status": "pending",
+      "acceptedAt": null,
+      "acceptedBy": null
+    },
+    {
+      "id": "PAY-2026-004",
+      "ref": "RCT-20261022-0004",
+      "studentId": "S-006",
+      "studentName": "Ishita Jain",
+      "fatherName": "Anil Jain",
+      "cls": "6-B",
+      "roll": "18",
+      "payerName": "Anil Jain",
+      "parentPhone": "+91 98765 41004",
+      "amount": 2800,
+      "recordedBy": "t-meena",
+      "recordedAt": "2026-10-22T12:10:00",
+      "status": "accepted",
+      "acceptedAt": "2026-10-22T16:30:00",
+      "acceptedBy": "p-001"
+    },
+    {
+      "id": "PAY-2026-003",
+      "ref": "RCT-20261021-0003",
+      "studentId": "S-007",
+      "studentName": "Vivaan Sharma",
+      "fatherName": "Deepak Sharma",
+      "cls": "1-B",
+      "roll": "09",
+      "payerName": "Pooja Sharma",
+      "parentPhone": "+91 98765 41003",
+      "amount": 1800,
+      "recordedBy": "t-sunita",
+      "recordedAt": "2026-10-21T10:40:00",
+      "status": "accepted",
+      "acceptedAt": "2026-10-21T14:10:00",
+      "acceptedBy": "p-001"
+    },
+    {
+      "id": "PAY-2026-002",
+      "ref": "RCT-20261020-0002",
+      "studentId": "S-008",
+      "studentName": "Diya Patel",
+      "fatherName": "Kiran Patel",
+      "cls": "3-A",
+      "roll": "05",
+      "payerName": "Kiran Patel",
+      "parentPhone": "+91 98765 41002",
+      "amount": 2500,
+      "recordedBy": "t-rakesh",
+      "recordedAt": "2026-10-20T13:25:00",
+      "status": "accepted",
+      "acceptedAt": "2026-10-20T16:05:00",
+      "acceptedBy": "p-001"
+    },
+    {
+      "id": "PAY-2026-001",
+      "ref": "RCT-20261019-0001",
+      "studentId": "S-009",
+      "studentName": "Arjun Yadav",
+      "fatherName": "Ramesh Yadav",
+      "cls": "2-A",
+      "roll": "16",
+      "payerName": "Ramesh Yadav",
+      "parentPhone": "+91 98765 41001",
+      "amount": 1500,
+      "recordedBy": "t-sunita",
+      "recordedAt": "2026-10-19T09:50:00",
+      "status": "accepted",
+      "acceptedAt": "2026-10-19T13:20:00",
+      "acceptedBy": "p-001"
+    },
+    {
+      "id": "PAY-2026-010",
+      "ref": "RCT-20261024-0011",
+      "studentId": "S-010",
+      "studentName": "Riya Kapoor",
+      "fatherName": "Deepak Kapoor",
+      "cls": "5-A",
+      "roll": "32",
+      "payerName": "Deepak Kapoor",
+      "parentPhone": null,
+      "amount": 2000,
+      "recordedBy": "t-anil",
+      "recordedAt": "2026-10-24T14:45:00",
+      "status": "pending",
+      "acceptedAt": null,
+      "acceptedBy": null
+    },
+    {
+      "id": "PAY-2026-011",
+      "ref": "RCT-20261024-0012",
+      "studentId": "S-011",
+      "studentName": "Meher Khanna",
+      "fatherName": "Vivek Khanna",
+      "cls": "2-B",
+      "roll": "21",
+      "payerName": "Sunita Khanna",
+      "parentPhone": null,
+      "amount": 1400,
+      "recordedBy": "t-anil",
+      "recordedAt": "2026-10-24T10:05:00",
+      "status": "pending",
+      "acceptedAt": null,
+      "acceptedBy": null
+    },
+    {
+      "id": "PAY-2026-012",
+      "ref": "RCT-20261018-0013",
+      "studentId": "S-012",
+      "studentName": "Prakash Kumar Gupta Bhadauriya",
+      "fatherName": "Ramchandra Gupta",
+      "cls": "7-A",
+      "roll": "41",
+      "payerName": "Ramchandra Gupta",
+      "parentPhone": null,
+      "amount": 1200,
+      "recordedBy": "t-anil",
+      "recordedAt": "2026-10-18T11:00:00",
+      "status": "pending",
+      "acceptedAt": null,
+      "acceptedBy": null
+    }
+  ],
+  "summary": {
+    "totalPayments": 12,
+    "totalAmount": 26600,
+    "byStatus": {
+      "pending": 8,
+      "accepted": 4
+    },
+    "byTeacher": {
+      "t-anil": {
+        "count": 5,
+        "amount": 7300
+      },
+      "t-meena": {
+        "count": 2,
+        "amount": 5000
+      },
+      "t-rakesh": {
+        "count": 2,
+        "amount": 6000
+      },
+      "t-sunita": {
+        "count": 3,
+        "amount": 8300
+      }
+    }
+  }
+}
