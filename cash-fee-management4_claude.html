@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prakash Public School - Cash Fee Management</title>
+<style>
+  :root {
+    --navy: #141b2d;
+    --navy-2: #1e3a5f;
+    --gold: #c8962e;
+    --bg: #f4f6fa;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --line: #c9d2de;
+    --error: #b42318;
+    --ok: #166534;
+    --ok-bg: #ecfdf3;
+    --warn-bg: #fff8e6;
+    --warn-text: #8a5a00;
+  }
+  * { box-sizing: border-box; }
+  /* Remove blue tap highlight on mobile (same as principal page) */
+  * { -webkit-tap-highlight-color: transparent; }
+  button, tr.row-click { -webkit-user-select: none; user-select: none; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  /* Header */
+  .site-head { position: sticky; top: 0; z-index: 50; }
+  .topbar {
+    background: var(--navy);
+    border-bottom: 3px solid var(--gold);
+    color: #fff;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .emblem {
+    width: 56px; height: 56px; background: #fff; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--navy); font-weight: 700; font-size: 22px; font-family: Georgia, serif;
+  }
+  .brand h1 { font-family: Georgia, "Times New Roman", serif; font-size: 22px; font-weight: 600; margin: 0; letter-spacing: .2px; }
+  .brand p { margin: 3px 0 0; font-size: 13px; color: #c9d2e3; }
+  .top-actions { display: flex; gap: 10px; align-items: center; }
+  .btn-outline {
+    background: transparent; color: #fff; border: 1px solid #7d8aa3;
+    padding: 9px 16px; border-radius: 3px; font-size: 14px; cursor: pointer; font-weight: 600;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-gold-outline { border: 1.5px solid var(--gold); color: var(--gold); }
+  .btn-gold-outline:hover { background: var(--gold); color: var(--navy); }
+
+  /* Tabs */
+  .tabs {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 0 28px;
+    display: flex;
+    gap: 4px;
+  }
+  .tab {
+    background: none; border: none; border-bottom: 3px solid transparent;
+    padding: 16px 18px; font-size: 15px; font-weight: 600; color: var(--muted); cursor: pointer;
+  }
+  .tab.active { color: var(--navy); border-bottom-color: var(--gold); }
+  .tab:hover { color: var(--navy); }
+
+  main { flex: 1; padding: 28px 20px 40px; }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+
+  .page-title { text-align: center; margin: 4px 0 6px; font-size: 28px; font-weight: 700; color: var(--navy); }
+  .page-sub { text-align: center; color: var(--muted); margin: 0 0 24px; }
+
+  /* Card */
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(20,27,45,.06);
+  }
+  .card-head {
+    padding: 22px 28px 18px;
+    border-bottom: 1px solid var(--line);
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .step-box {
+    width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: var(--navy); flex-shrink: 0; font-size: 14px;
+  }
+  .card-head h2 { margin: 0; font-size: 16px; letter-spacing: .6px; text-transform: uppercase; color: var(--navy); }
+  .card-head p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+
+  .notice {
+    margin: 20px 28px 0;
+    background: var(--warn-bg);
+    border: 1px solid #f1d27a;
+    color: var(--warn-text);
+    padding: 10px 14px;
+    border-radius: 3px;
+    font-size: 14px;
+    display: flex; gap: 10px; align-items: center;
+  }
+  .notice::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0;
+  }
+
+  form { padding: 24px 28px 28px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 36px; }
+  .field label {
+    display: block; font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 7px;
+  }
+  .field label .req { color: var(--error); }
+  .input, .select {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #9aa6b8;
+    border-radius: 3px;
+    padding: 0 12px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--text);
+    background: #fff;
+    outline: none;
+  }
+  .input:focus, .select:focus { border-color: var(--navy-2); box-shadow: 0 0 0 3px rgba(30,58,95,.15); }
+  .input::placeholder { color: #8b95a7; }
+  .input[readonly] { background: #f1f4f9; color: var(--muted); }
+  .input.invalid, .select.invalid { border-color: var(--error); background: #fffafa; }
+  .err { color: var(--error); font-size: 13px; margin-top: 6px; min-height: 0; display: none; }
+  .err.show { display: block; }
+  .hint { color: var(--muted); font-size: 12.5px; margin-top: 6px; }
+
+  .actions {
+    margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--navy-2); color: #fff; border: none; border-radius: 3px;
+    padding: 12px 26px; font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--navy); }
+  .btn-primary:active { transform: translateY(1px); }
+  .input:hover:not(:focus) { border-color: #6f7d95; }
+  .btn-secondary {
+    background: #fff; color: var(--navy); border: 1px solid #9aa6b8; border-radius: 3px;
+    padding: 12px 22px; font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  .btn-secondary:hover { border-color: var(--navy); }
+
+  .toast {
+    margin: 0 28px 0;
+    padding: 12px 16px;
+    border-radius: 3px;
+    border: 1px solid #a6e3bd;
+    background: var(--ok-bg);
+    color: var(--ok);
+    font-weight: 600;
+    display: none;
+  }
+  .toast.show { display: block; margin-top: 20px; }
+
+  /* History */
+  .table-wrap { overflow-x: auto; padding: 0 28px 24px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 20px; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  th.col-sn, td.col-sn, th.col-cls, td.col-cls, th.col-roll, td.col-roll, th.col-amt, td.col-amt, th.col-status, td.col-status { white-space: nowrap; }
+  th.col-sn { width: 48px; }
+  th.col-cls, td.col-cls { width: 74px; }
+  th.col-amt, td.col-amt { width: 72px; }
+  th.col-payer, td.col-payer { width: 110px; }
+  /* Fixed history card width and fixed column widths: extra screen width no longer adds empty space */
+  #view-history .card { max-width: 860px; margin: 0 auto; }
+  table { table-layout: fixed; }
+  th.col-sn, td.col-sn { width: 48px; }
+  th.col-dt, td.col-dt { width: 108px; }
+  th.col-cls, td.col-cls { width: 64px; }
+  th.col-stu, td.col-stu { width: 150px; }
+  th.col-roll, td.col-roll { width: 72px; }
+  td.col-roll { text-align: center; }
+  th.col-payer, td.col-payer { width: 130px; }
+  th.col-amt, td.col-amt { width: 80px; }
+  th.col-status, td.col-status { width: 112px; }
+  th.num.col-amt, td.num.col-amt { text-align: center; }
+  .name-text, .name-first, .name-last { display: block; width: 100%; max-width: 100%; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  td.col-stu, td.col-payer { text-align: center; }
+  tbody td { height: 66px; }
+  /* Column widths sized to fit their headers; headers centred over centred body values */
+  th.col-dt { width: 116px; }
+  th.col-stu, td.col-stu { width: 140px; }
+  th.col-roll, td.col-roll { width: 88px; }
+  th.col-payer, td.col-payer { width: 120px; }
+  th.col-amt, td.col-amt { width: 104px; }
+  th.col-stu, th.col-roll, th.col-payer { text-align: center; }
+  th.col-status, td.col-status { width: 112px; }
+  .nowrap { white-space: nowrap; }
+  .sub { display: block; color: var(--muted); font-size: 12.5px; margin-top: 3px; white-space: nowrap; }
+  th { background: #eef2f8; color: var(--navy); font-size: 13px; text-transform: uppercase; letter-spacing: .4px; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .empty { text-align: center; color: var(--muted); padding: 28px 0; }
+  .badge { display: inline-block; background: var(--ok-bg); color: var(--ok); border: 1px solid #a6e3bd; border-radius: 3px; padding: 2px 8px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .badge.pending { background: var(--warn-bg); color: var(--warn-text); border-color: #f1d27a; }
+  tr.row-click { cursor: pointer; }
+  tr.row-click:hover td { background: #f7f9fc; }
+  tr.row-click:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+
+  /* Read-only detail popup */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(20,27,45,.55); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
+  .modal-card { background: #fff; width: 100%; max-width: 600px; max-height: calc(100vh - 32px); overflow: hidden; border-radius: 4px; box-shadow: 0 10px 30px rgba(20,27,45,.25); display: flex; flex-direction: column; }
+  .modal-head { flex-shrink: 0; padding: 18px 22px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 14px; }
+  .modal-title { flex: 1; min-width: 0; }
+  .modal-title h2 { margin: 0; font-size: 16px; letter-spacing: .6px; text-transform: uppercase; color: var(--navy); }
+  .modal-title p { margin: 3px 0 0; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+  .icon-close { width: 36px; height: 36px; border: 1px solid var(--line); background: #fff; border-radius: 3px; cursor: pointer; font-size: 14px; color: var(--navy); flex-shrink: 0; }
+  .icon-close:hover { border-color: var(--navy); }
+  .modal-body { flex: 1; min-height: 0; overflow-y: auto; padding: 0 22px 8px; }
+  .modal-foot { flex-shrink: 0; padding: 16px 22px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; }
+  .det-notice { margin-top: 16px; background: var(--warn-bg); border: 1px solid #f1d27a; color: var(--warn-text); padding: 10px 14px; border-radius: 3px; font-size: 13.5px; }
+  .det-section { margin: 20px 0 12px; font-size: 13px; font-weight: 700; color: var(--navy); letter-spacing: .5px; text-transform: uppercase; }
+  .det-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+  .det-field label { display: block; font-weight: 700; color: var(--navy); font-size: 13px; margin-bottom: 6px; }
+  .det-val { border: 1px solid #d5dce6; background: #f1f4f9; border-radius: 3px; padding: 10px 12px; font-size: 15px; color: var(--text); min-height: 42px; }
+  .det-val.ok { background: var(--ok-bg); border-color: #a6e3bd; color: var(--ok); font-weight: 600; }
+  .det-val.pending { background: var(--warn-bg); border-color: #f1d27a; color: var(--warn-text); font-weight: 600; }
+
+  .hidden { display: none !important; }
+
+  /* Footer */
+  footer {
+    background: var(--navy);
+    color: #c9d2e3;
+    border-top: 3px solid var(--gold);
+    padding: 16px 28px;
+    font-size: 13px;
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    .topbar { padding: 10px 14px; border-bottom-width: 2px; gap: 10px; }
+    .brand { gap: 12px; }
+    .emblem { width: 38px; height: 38px; font-size: 14px; border-radius: 3px; }
+    .brand h1 { font-size: 19px; }
+    .brand p { display: none; }
+    .top-actions { gap: 8px; }
+    .top-actions .btn-outline { font-size: 13px; padding: 7px 14px; }
+    .tabs { padding: 0 12px; overflow-x: auto; }
+    form, .card-head { padding-left: 18px; padding-right: 18px; }
+    .notice { margin: 16px 18px 0; }
+    .table-wrap { padding: 0 18px 20px; }
+    .toast { margin: 0 18px; }
+    .col-opt { display: none; }
+    /* Mobile: auto column sizing, student name takes the remaining width */
+    table { table-layout: auto; }
+    th[class*="col-"], td[class*="col-"] { width: auto; }
+    td.col-stu .name-text, td.col-stu .name-first, td.col-stu .name-last { width: 0; min-width: 100%; }
+    .det-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Very small phones (320-380px): compact header, same as principal page */
+  @media (max-width: 380px) {
+    .topbar { padding-left: 10px; padding-right: 10px; }
+    .brand { gap: 8px; min-width: 0; }
+    .emblem { width: 32px; height: 32px; font-size: 12px; }
+    .brand h1 { font-size: 15px; }
+    .top-actions { gap: 6px; }
+    .top-actions .btn-outline { padding: 6px 9px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-head">
+<header class="topbar">
+  <div class="brand">
+    <div class="emblem">PPS</div>
+    <div>
+      <h1>Prakash Public School</h1>
+      <p>Cash Fee Management System</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="btn-outline btn-gold-outline" type="button" id="helpBtn">Help / Support</button>
+    <button class="btn-outline" type="button" id="logoutBtn">Logout</button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="create" role="tab">Create Payment</button>
+  <button class="tab" data-tab="history" role="tab">History &amp; Handover</button>
+</nav>
+</div>
+
+<main>
+  <div class="wrap">
+
+    <!-- CREATE PAYMENT -->
+    <section id="view-create">
+      <h2 class="page-title">Record Cash Fee Payment</h2>
+      <p class="page-sub">Enter the payment details exactly as received at the counter.</p>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="step-box">1</div>
+          <div>
+            <h2>Payment Details</h2>
+            <p>All fields marked with * are mandatory.</p>
+          </div>
+        </div>
+
+        <div class="notice">Original entry amounts are non-editable after save.</div>
+
+        <form id="payForm" novalidate>
+          <div class="grid">
+            <div class="field">
+              <label for="studentName">Student Name <span class="req">*</span></label>
+              <input class="input" id="studentName" list="studentList" placeholder="Name exactly as in school records" autocomplete="off">
+              <datalist id="studentList"></datalist>
+              <div class="err" id="err-studentName">Student name is required.</div>
+            </div>
+
+            <div class="field">
+              <label for="fatherName">Father's Name <span class="req">*</span></label>
+              <input class="input" id="fatherName" placeholder="Father's full name">
+              <div class="err" id="err-fatherName">Father's name is required.</div>
+            </div>
+
+            <div class="field">
+              <label for="classSection">Class &amp; Section <span class="req">*</span></label>
+              <select class="select" id="classSection">
+                <option value="">Select Class &amp; Section</option>
+                <option>Nursery - A</option>
+                <option>LKG - A</option>
+                <option>UKG - A</option>
+                <option>Class 1 - A</option>
+                <option>Class 2 - A</option>
+                <option>Class 3 - A</option>
+                <option>Class 4 - A</option>
+                <option>Class 5 - A</option>
+                <option>Class 6 - A</option>
+                <option>Class 7 - A</option>
+                <option>Class 8 - A</option>
+                <option>Class 9 - A</option>
+                <option>Class 10 - A</option>
+              </select>
+              <div class="err" id="err-classSection">Please select class and section.</div>
+            </div>
+
+            <div class="field">
+              <label for="amount">Amount Collected (₹) <span class="req">*</span></label>
+              <input class="input" id="amount" type="number" min="1" step="1" placeholder="e.g. 2500" inputmode="numeric">
+              <div class="err" id="err-amount">Enter a valid amount greater than 0.</div>
+            </div>
+
+            <div class="field">
+              <label for="rollNo">Roll No. <span class="req">*</span></label>
+              <input class="input" id="rollNo" inputmode="numeric" placeholder="Enter roll no. (auto-filled for known students)" autocomplete="off">
+              <div class="err" id="err-rollNo">Roll number is required.</div>
+              <div class="hint">Auto-filled for known students. You can also type it manually.</div>
+            </div>
+
+            <div class="field">
+              <label for="payerName">Payer Name <span class="req">*</span></label>
+              <input class="input" id="payerName" placeholder="Name of the person paying">
+              <div class="err" id="err-payerName">Payer name is required.</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn-primary" type="submit">✓ Record Cash Payment</button>
+            <button class="btn-secondary" type="button" id="clearBtn">Clear Form</button>
+          </div>
+        </form>
+
+        <div class="toast" id="toast"></div>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="view-history" class="hidden">
+      <h2 class="page-title">History &amp; Handover</h2>
+      <p class="page-sub">Cash payments recorded in this session.</p>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="step-box">2</div>
+          <div>
+            <h2>Recorded Payments</h2>
+            <p>Total collected: <strong id="totalCollected">₹0</strong> &nbsp;|&nbsp; Entries: <strong id="entryCount">0</strong></p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="col-sn">SN</th>
+                <th class="col-dt">Date &amp; Time</th>
+                <th class="col-cls">Class</th>
+                <th class="col-stu">Student</th>
+                <th class="col-opt col-roll">Roll No.</th>
+                <th class="col-opt col-payer">Payer</th>
+                <th class="num col-amt">Amount (₹)</th>
+                <th class="col-status">Status</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+          <div class="empty" id="emptyMsg">No payments recorded yet.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- READ-ONLY PAYMENT DETAIL POPUP -->
+<div class="modal-overlay hidden" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="step-box" id="detailIndex">1</div>
+      <div class="modal-title">
+        <h2 id="detailTitle">Payment Details</h2>
+        <p id="detailRef"></p>
+      </div>
+      <button class="icon-close" type="button" id="detailClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="detailBody"></div>
+    <div class="modal-foot">
+      <button class="btn-secondary" type="button" id="detailCloseBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>Prakash Public School • Cash Fee Collection &amp; Handover</span>
+  <span>Strict Traceability Enabled • No Partial Processing</span>
+</footer>
+
+<script>
+  // Sample student master data (replace with real records)
+  const students = [
+    { name: "Aarav Sharma",  father: "Rajesh Sharma",  roll: "101", cls: "Class 6 - A" },
+    { name: "Ananya Verma",  father: "Suresh Verma",   roll: "102", cls: "Class 6 - A" },
+    { name: "Ishaan Gupta",  father: "Manoj Gupta",    roll: "215", cls: "Class 8 - A" },
+    { name: "Priya Singh",   father: "Vikram Singh",   roll: "310", cls: "Class 10 - A" }
+  ];
+
+  const $ = id => document.getElementById(id);
+  // Dummy history data for this teacher (replace with real records later)
+  const history = [
+    { timeStr: "9:20 AM", dateStr: "25 Oct 2026", student: "Aarav Mehta", father: "Sanjay Mehta", cls: "Class 3 - B", roll: "14", payer: "Sanjay Mehta", amount: 1500, ref: "RCT-20261025-0009", recordedBy: "Anil Verma", recordedOn: "25 Oct 2026, 9:20 AM", status: "Pending", acceptedAt: null },
+    { timeStr: "2:45 PM", dateStr: "24 Oct 2026", student: "Riya Kapoor", father: "Deepak Kapoor", cls: "Class 5 - A", roll: "32", payer: "Deepak Kapoor", amount: 2000, ref: "RCT-20261024-0007", recordedBy: "Anil Verma", recordedOn: "24 Oct 2026, 2:45 PM", status: "Pending", acceptedAt: null },
+    { timeStr: "10:05 AM", dateStr: "24 Oct 2026", student: "Meher Khanna", father: "Vivek Khanna", cls: "Class 2 - B", roll: "21", payer: "Sunita Khanna", amount: 1400, ref: "RCT-20261024-0004", recordedBy: "Anil Verma", recordedOn: "24 Oct 2026, 10:05 AM", status: "Pending", acceptedAt: null },
+    { timeStr: "3:30 PM", dateStr: "23 Oct 2026", student: "Priya Singh", father: "Vikram Singh", cls: "Class 4 - A", roll: "47", payer: "Vikram Singh", amount: 3500, ref: "RCT-20261023-0008", recordedBy: "Anil Verma", recordedOn: "23 Oct 2026, 3:30 PM", status: "Pending", acceptedAt: null },
+    { timeStr: "11:15 AM", dateStr: "23 Oct 2026", student: "Kabir Singh", father: "Rohit Singh", cls: "Class 1 - A", roll: "9", payer: "Rohit Singh", amount: 5000, ref: "RCT-20261023-0003", recordedBy: "Anil Verma", recordedOn: "23 Oct 2026, 11:15 AM", status: "Pending", acceptedAt: null },
+    { timeStr: "12:10 PM", dateStr: "22 Oct 2026", student: "Ishita Jain", father: "Sandeep Jain", cls: "Class 6 - B", roll: "58", payer: "Sandeep Jain", amount: 2800, ref: "RCT-20261022-0005", recordedBy: "Anil Verma", recordedOn: "22 Oct 2026, 12:10 PM", status: "Accepted", acceptedAt: "23 Oct 2026, 10:00 AM" },
+    { timeStr: "10:40 AM", dateStr: "21 Oct 2026", student: "Vivaan Sharma", father: "Amit Sharma", cls: "Class 1 - B", roll: "12", payer: "Amit Sharma", amount: 1800, ref: "RCT-20261021-0002", recordedBy: "Anil Verma", recordedOn: "21 Oct 2026, 10:40 AM", status: "Accepted", acceptedAt: "22 Oct 2026, 9:30 AM" },
+    { timeStr: "1:25 PM", dateStr: "20 Oct 2026", student: "Diya Patel", father: "Hemant Patel", cls: "Class 3 - A", roll: "26", payer: "Hemant Patel", amount: 2500, ref: "RCT-20261020-0006", recordedBy: "Anil Verma", recordedOn: "20 Oct 2026, 1:25 PM", status: "Accepted", acceptedAt: "21 Oct 2026, 11:00 AM" },
+    { timeStr: "9:50 AM", dateStr: "19 Oct 2026", student: "Arjun Yadav", father: "Ramesh Yadav", cls: "Class 2 - A", roll: "33", payer: "Ramesh Yadav", amount: 1500, ref: "RCT-20261019-0001", recordedBy: "Anil Verma", recordedOn: "19 Oct 2026, 9:50 AM", status: "Accepted", acceptedAt: "20 Oct 2026, 9:00 AM" },
+    { timeStr: "11:00 AM", dateStr: "18 Oct 2026", student: "Prakash Kumar Gupta Bhadauriya", father: "Ramchandra Gupta", cls: "Class 7 - A", roll: "41", payer: "Ramchandra Gupta", amount: 1200, ref: "RCT-20261018-0010", recordedBy: "Anil Verma", recordedOn: "18 Oct 2026, 11:00 AM", status: "Pending", acceptedAt: null }
+  ];
+
+  // Populate student suggestions
+  students.forEach(s => {
+    const opt = document.createElement("option");
+    opt.value = s.name;
+    $("studentList").appendChild(opt);
+  });
+
+  // Auto-fill roll, father name and class when a known student is chosen
+  function applyStudent() {
+    const s = students.find(x => x.name.toLowerCase() === $("studentName").value.trim().toLowerCase());
+    if (s) {
+      $("rollNo").value = s.roll;
+      $("fatherName").value = s.father;
+      $("classSection").value = s.cls;
+      clearError("studentName");
+      clearError("rollNo");
+    }
+  }
+  $("studentName").addEventListener("change", applyStudent);
+  $("studentName").addEventListener("input", applyStudent);
+
+  // Validation helpers
+  function showError(id) {
+    $(id).classList.add("invalid");
+    $("err-" + id).classList.add("show");
+  }
+  function clearError(id) {
+    $(id).classList.remove("invalid");
+    $("err-" + id).classList.remove("show");
+  }
+
+  const required = ["studentName", "fatherName", "classSection", "amount", "rollNo", "payerName"];
+
+  function validate() {
+    let ok = true;
+    required.forEach(id => {
+      const val = $(id).value.trim();
+      let valid = val !== "";
+      if (id === "amount") valid = Number(val) > 0;
+      if (valid) clearError(id); else { showError(id); ok = false; }
+    });
+    return ok;
+  }
+
+  // Live clearing of errors while typing
+  required.forEach(id => {
+    $(id).addEventListener("input", () => { if ($(id).value.trim()) clearError(id); });
+    $(id).addEventListener("change", () => { if ($(id).value.trim()) clearError(id); });
+  });
+
+  function resetForm() {
+    $("payForm").reset();
+    $("rollNo").value = "";
+    required.forEach(clearError);
+  }
+
+  function toast(msg) {
+    const t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 4000);
+  }
+
+  // Submit
+  $("payForm").addEventListener("submit", e => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    const amount = Number($("amount").value);
+    const now = new Date();
+    const entry = {
+      timeStr: now.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" }),
+      dateStr: now.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
+      student: $("studentName").value.trim(),
+      father: $("fatherName").value.trim(),
+      cls: $("classSection").value,
+      roll: $("rollNo").value,
+      payer: $("payerName").value.trim(),
+      amount: amount,
+      ref: "RCT-" + now.toISOString().slice(0, 10).replace(/-/g, "") + "-" + String(history.length + 1).padStart(4, "0"),
+      recordedBy: "Anil Verma",
+      recordedOn: now.toLocaleString("en-IN", { day: "2-digit", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" }),
+      status: "Pending",
+      acceptedAt: null
+    };
+    history.push(entry);
+    renderHistory();
+    resetForm();
+    toast("Payment recorded successfully. Receipt #" + String(history.length).padStart(4, "0") + " generated.");
+  });
+
+  $("clearBtn").addEventListener("click", resetForm);
+
+  // History rendering
+  function renderHistory() {
+    const body = $("historyBody");
+    body.innerHTML = "";
+    history.forEach((h, i) => {
+      const tr = document.createElement("tr");
+      const badgeCls = h.status === "Accepted" ? "badge" : "badge pending";
+      tr.className = "row-click";
+      tr.tabIndex = 0;
+      tr.innerHTML = `
+        <td class="col-sn">${i + 1}</td>
+        <td class="col-dt"><span class="nowrap">${h.timeStr}</span><span class="sub">${h.dateStr}</span></td>
+        <td class="col-cls">${shortCls(h.cls)}</td>
+        <td class="col-stu name-cell" data-name="${escapeHtml(h.student)}"></td>
+        <td class="col-opt col-roll">${escapeHtml(h.roll)}</td>
+        <td class="col-opt col-payer name-cell" data-name="${escapeHtml(h.payer)}"></td>
+        <td class="num col-amt">${h.amount.toLocaleString("en-IN")}</td>
+        <td class="col-status"><span class="${badgeCls}">${h.status}</span></td>`;
+      tr.addEventListener("click", () => openDetail(i));
+      tr.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDetail(i); }
+      });
+      body.appendChild(tr);
+    });
+    const total = history.reduce((s, h) => s + h.amount, 0);
+    $("totalCollected").textContent = "₹" + total.toLocaleString("en-IN");
+    $("entryCount").textContent = history.length;
+    $("emptyMsg").classList.toggle("hidden", history.length > 0);
+    fitNames();
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  // Splits "First Last Name" into first word and rest on separate lines
+  function splitName(name) {
+    const parts = String(name).trim().split(/\s+/);
+    const first = '<span class="name-first">' + escapeHtml(parts[0] || "") + "</span>";
+    if (parts.length < 2) return first;
+    return first + '<span class="name-last">' + escapeHtml(parts.slice(1).join(" ")) + "</span>";
+  }
+
+  // Full name on one line (centred) if it fits the column; otherwise first/last on two lines
+  function fitNames() {
+    document.querySelectorAll(".name-cell").forEach(cell => {
+      const full = cell.dataset.name || "";
+      cell.innerHTML = '<span class="name-text">' + escapeHtml(full) + "</span>";
+      const t = cell.firstElementChild;
+      if (t.scrollWidth > t.clientWidth) cell.innerHTML = splitName(full);
+    });
+  }
+  window.addEventListener("resize", () => {
+    if (!$("view-history").classList.contains("hidden")) fitNames();
+  });
+
+  // "Class 3 - A" -> "3-A" to keep the table column narrow
+  function shortCls(c) {
+    return String(c).replace("Class ", "").replace(" - ", "-");
+  }
+
+  // Read-only payment detail popup (teacher cannot edit anything here)
+  function openDetail(i) {
+    const h = history[i];
+    if (!h) return;
+    const v = x => escapeHtml(String(x || "—"));
+    const field = (label, value, extra = "") =>
+      `<div class="det-field"><label>${label}</label><div class="det-val ${extra}">${value}</div></div>`;
+    const handover = h.status === "Accepted"
+      ? field("Handover Accepted At", v(h.acceptedAt), "ok")
+      : field("Handover Accepted At", "Not verified by principal", "pending");
+
+    $("detailIndex").textContent = i + 1;
+    $("detailRef").textContent = h.ref;
+    $("detailBody").innerHTML = `
+      <div class="det-notice">Read-only view. Entries cannot be edited or deleted after save.</div>
+      <div class="det-section">Payment</div>
+      <div class="det-grid">
+        ${field("Student Name", v(h.student))}
+        ${field("Father's Name", v(h.father))}
+        ${field("Class &amp; Section", v(h.cls))}
+        ${field("Amount Collected (₹)", h.amount.toLocaleString("en-IN"))}
+        ${field("Roll No.", v(h.roll))}
+        ${field("Payer Name", v(h.payer))}
+      </div>
+      <div class="det-section">Receipt &amp; Verification</div>
+      <div class="det-grid">
+        ${field("Payment Ref. No.", v(h.ref))}
+        ${field("Recorded By (Teacher)", v(h.recordedBy))}
+        ${field("Recorded On", v(h.recordedOn))}
+        ${handover}
+      </div>`;
+    $("detailModal").classList.remove("hidden");
+    $("detailClose").focus();
+  }
+
+  function closeDetail() {
+    $("detailModal").classList.add("hidden");
+  }
+  $("detailClose").addEventListener("click", closeDetail);
+  $("detailCloseBtn").addEventListener("click", closeDetail);
+  $("detailModal").addEventListener("click", e => { if (e.target.id === "detailModal") closeDetail(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeDetail(); });
+
+  // Tabs
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const isCreate = btn.dataset.tab === "create";
+      $("view-create").classList.toggle("hidden", !isCreate);
+      $("view-history").classList.toggle("hidden", isCreate);
+      if (!isCreate) fitNames();
+    });
+  });
+
+  $("logoutBtn").addEventListener("click", () => toast("Logged out (prototype). Session cleared."));
+  $("helpBtn").addEventListener("click", () => toast("For support, contact the school accounts office."));
+
+  renderHistory();
+</script>
+</body>
+</html>
