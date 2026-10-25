@@ -13,26 +13,23 @@
 
   const history = loadHistory();
 
-  // Populate student suggestions
-  students.forEach(s => {
-    const opt = document.createElement("option");
-    opt.value = s.name;
-    $("studentList").appendChild(opt);
-  });
-
-  // Auto-fill roll, father name and class when a known student is chosen
-  function applyStudent() {
-    const s = students.find(x => x.name.toLowerCase() === $("studentName").value.trim().toLowerCase());
+  // Auto-fill roll, father name and class when a student is picked (cleared when the pick is removed)
+  function applyStudent(s) {
     if (s) {
       $("rollNo").value = s.roll;
       $("fatherName").value = s.father;
       $("classSection").value = s.cls;
       clearError("studentName");
       clearError("rollNo");
+    } else {
+      $("rollNo").value = "";
+      $("fatherName").value = "";
+      $("classSection").value = "";
     }
   }
-  $("studentName").addEventListener("change", applyStudent);
-  $("studentName").addEventListener("input", applyStudent);
+  const studentPicker = createStudentCombo("studentName", "studentOptions", students, applyStudent);
+
+
 
   // Validation helpers
   function showError(id) {
@@ -65,6 +62,7 @@
 
   function resetForm() {
     $("payForm").reset();
+    studentPicker.reset();
     $("rollNo").value = "";
     required.forEach(clearError);
   }

@@ -352,6 +352,19 @@
     .top-actions { gap: 6px; }
     .top-actions .btn-outline { padding: 7px 9px; font-size: 12px; }
   }
+  /* ===== Student searchable dropdown ===== */
+  .combo { position: relative; }
+  .combo-list {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 20;
+    margin-top: 4px; max-height: 240px; overflow-y: auto;
+    background: #fff; border: 1px solid var(--line); border-radius: 4px;
+    box-shadow: 0 6px 16px rgba(20, 27, 45, .12);
+  }
+  .combo-list[hidden] { display: none; }
+  .combo-item { padding: 10px 12px; cursor: pointer; font-size: 15px; color: var(--text); }
+  .combo-item:hover, .combo-item.active { background: #eef2f8; }
+  .combo-empty { padding: 10px 12px; color: var(--muted); font-size: 14px; }
+  .combo.drop-up .combo-list { top: auto; bottom: 100%; margin-top: 0; margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -400,10 +413,11 @@
           <div class="grid">
             <div class="field">
               <label for="studentName">Student Name <span class="req">*</span></label>
-              <input class="input" id="studentName" list="studentList" placeholder="Name exactly as in school records" autocomplete="off">
-              <datalist id="studentList"></datalist>
-              <div class="err" id="err-studentName">Student name is required.</div>
-            </div>
+             <div class="combo">
+  <input class="input" id="studentName" placeholder="Type to search student" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="studentOptions" aria-autocomplete="list">
+  <div class="combo-list" id="studentOptions" role="listbox" hidden></div>
+</div>
+</div>
 
             <div class="field">
               <label for="fatherName">Father's Name <span class="req">*</span></label>
@@ -473,6 +487,7 @@
 
 <script src="./../js/payment-seed.js"></script>
 <script src="./../js/shared.js"></script>
+<script src="./../js/student-combo.js"></script>
 <script src="./../js/create-payment.js"></script>
 </body>
 </html>

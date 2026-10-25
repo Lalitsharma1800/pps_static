@@ -3,7 +3,6 @@
 // Load order: payment-seed.js -> shared.js -> page script.
 
 const $ = id => document.getElementById(id);
-
 // Shared session storage so both pages see the same payments
 const STORE_KEY = "chf_payment_history";
 
