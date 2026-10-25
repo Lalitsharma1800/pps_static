@@ -1,0 +1,16 @@
+// payment-seed.js
+// Dummy starting payments for the teacher pages (used on first load only).
+// Loaded before shared.js and the page scripts.
+
+  const SEED = [
+    { timeStr: "9:20 AM", dateStr: "25 Oct 2026", student: "Aarav Mehta", father: "Sanjay Mehta", cls: "Class 3 - B", roll: "14", payer: "Sanjay Mehta", amount: 1500, ref: "RCT-20261025-0009", recordedBy: "Anil Verma", recordedOn: "25 Oct 2026, 9:20 AM", status: "Pending", acceptedAt: null },
+    { timeStr: "2:45 PM", dateStr: "24 Oct 2026", student: "Riya Kapoor", father: "Deepak Kapoor", cls: "Class 5 - A", roll: "32", payer: "Deepak Kapoor", amount: 2000, ref: "RCT-20261024-0007", recordedBy: "Anil Verma", recordedOn: "24 Oct 2026, 2:45 PM", status: "Pending", acceptedAt: null },
+    { timeStr: "10:05 AM", dateStr: "24 Oct 2026", student: "Meher Khanna", father: "Vivek Khanna", cls: "Class 2 - B", roll: "21", payer: "Sunita Khanna", amount: 1400, ref: "RCT-20261024-0004", recordedBy: "Anil Verma", recordedOn: "24 Oct 2026, 10:05 AM", status: "Pending", acceptedAt: null },
+    { timeStr: "3:30 PM", dateStr: "23 Oct 2026", student: "Priya Singh", father: "Vikram Singh", cls: "Class 4 - A", roll: "47", payer: "Vikram Singh", amount: 3500, ref: "RCT-20261023-0008", recordedBy: "Anil Verma", recordedOn: "23 Oct 2026, 3:30 PM", status: "Pending", acceptedAt: null },
+    { timeStr: "11:15 AM", dateStr: "23 Oct 2026", student: "Kabir Singh", father: "Rohit Singh", cls: "Class 1 - A", roll: "9", payer: "Rohit Singh", amount: 5000, ref: "RCT-20261023-0003", recordedBy: "Anil Verma", recordedOn: "23 Oct 2026, 11:15 AM", status: "Pending", acceptedAt: null },
+    { timeStr: "12:10 PM", dateStr: "22 Oct 2026", student: "Ishita Jain", father: "Sandeep Jain", cls: "Class 6 - B", roll: "58", payer: "Sandeep Jain", amount: 2800, ref: "RCT-20261022-0005", recordedBy: "Anil Verma", recordedOn: "22 Oct 2026, 12:10 PM", status: "Accepted", acceptedAt: "23 Oct 2026, 10:00 AM" },
+    { timeStr: "10:40 AM", dateStr: "21 Oct 2026", student: "Vivaan Sharma", father: "Amit Sharma", cls: "Class 1 - B", roll: "12", payer: "Amit Sharma", amount: 1800, ref: "RCT-20261021-0002", recordedBy: "Anil Verma", recordedOn: "21 Oct 2026, 10:40 AM", status: "Accepted", acceptedAt: "22 Oct 2026, 9:30 AM" },
+    { timeStr: "1:25 PM", dateStr: "20 Oct 2026", student: "Diya Patel", father: "Hemant Patel", cls: "Class 3 - A", roll: "26", payer: "Hemant Patel", amount: 2500, ref: "RCT-20261020-0006", recordedBy: "Anil Verma", recordedOn: "20 Oct 2026, 1:25 PM", status: "Accepted", acceptedAt: "21 Oct 2026, 11:00 AM" },
+    { timeStr: "9:50 AM", dateStr: "19 Oct 2026", student: "Arjun Yadav", father: "Ramesh Yadav", cls: "Class 2 - A", roll: "33", payer: "Ramesh Yadav", amount: 1500, ref: "RCT-20261019-0001", recordedBy: "Anil Verma", recordedOn: "19 Oct 2026, 9:50 AM", status: "Accepted", acceptedAt: "20 Oct 2026, 9:00 AM" },
+    { timeStr: "11:00 AM", dateStr: "18 Oct 2026", student: "Prakash Kumar Gupta Bhadauriya", father: "Ramchandra Gupta", cls: "Class 7 - A", roll: "41", payer: "Ramchandra Gupta", amount: 1200, ref: "RCT-20261018-0010", recordedBy: "Anil Verma", recordedOn: "18 Oct 2026, 11:00 AM", status: "Pending", acceptedAt: null }
+  ];
