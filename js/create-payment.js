@@ -2,33 +2,43 @@
 // Teacher page: record a cash fee payment.
 // Requires: payment-seed.js, shared.js
 
-// Sample student master data (replace with real records)
-const students = [
-  {
-    name: "Aarav Sharma",
-    father: "Rajesh Sharma",
-    roll: "101",
-    cls: "Class 6 - A",
-  },
-  {
-    name: "Ananya Verma",
-    father: "Suresh Verma",
-    roll: "102",
-    cls: "Class 6 - A",
-  },
-  {
-    name: "Ishaan Gupta",
-    father: "Manoj Gupta",
-    roll: "215",
-    cls: "Class 8 - A",
-  },
-  {
-    name: "Priya Singh",
-    father: "Vikram Singh",
-    roll: "310",
-    cls: "Class 10 - A",
-  },
-];
+// Students are loaded from cash-fee-dummy.json
+const students = [];
+
+fetch("../cash-fee-dummy.json")
+  .then(res => {
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return res.json();
+  })
+  .then(data => {
+    // Class id -> label, and the set of labels this page can select
+    const classById = {};
+    const allowedLabels = new Set();
+    data.classes.forEach(c => {
+      classById[c.id] = c;
+      if (c.inCreateDropdown) allowedLabels.add(c.label);
+    });
+
+    data.students.forEach(s => {
+      // "6-A" -> "Class 6 - A". Values already in label form are kept as they are.
+      const cls = classById[s.cls] ? classById[s.cls].label : s.cls;
+
+      // Only students in classes shown in the class dropdown
+      if (!allowedLabels.has(cls)) return;
+
+      students.push({
+        id: s.id,
+        name: s.name,
+        father: s.fatherName,
+        roll: s.roll,
+        cls: cls
+      });
+    });
+  })
+  .catch(err => {
+    console.error("Student list load nahi hui:", err);
+    toast("Student list load nahi ho payi. Page refresh karein.");
+  });
 
 const history = loadHistory();
 
