@@ -2,7 +2,7 @@
 // Helpers used by both teacher pages (create-payment, history-handover).
 // Load order: payment-seed.js -> shared.js -> page script.
 
-const $ = id => document.getElementById(id);
+const $ = (id) => document.getElementById(id);
 // Shared session storage so both pages see the same payments
 const STORE_KEY = "chf_payment_history";
 
@@ -15,17 +15,23 @@ function loadHistory() {
   return SEED.slice();
 }
 
-
 // Saves the given payment list to sessionStorage
 function saveHistory(list) {
-  try { sessionStorage.setItem(STORE_KEY, JSON.stringify(list)); } catch (e) {}
+  try {
+    sessionStorage.setItem(STORE_KEY, JSON.stringify(list));
+  } catch (e) {}
 }
 
 // Escapes & < > " ' so user text is safe inside innerHTML
 function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  return String(str).replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
 }
-
 
 // Shows the #toast element for 4 seconds
 function toast(msg) {
@@ -34,4 +40,3 @@ function toast(msg) {
   t.classList.add("show");
   setTimeout(() => t.classList.remove("show"), 4000);
 }
-

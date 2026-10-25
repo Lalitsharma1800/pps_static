@@ -1,493 +1,1217 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Create Payment - Prakash Public School</title>
-<style>
-  :root {
-    --navy: #141b2d;
-    --navy-2: #1e3a5f;
-    --gold: #c8962e;
-    --bg: #f4f6fa;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --line: #c9d2de;
-    --error: #b42318;
-    --ok: #166534;
-    --ok-bg: #ecfdf3;
-    --warn-bg: #fff8e6;
-    --warn-text: #8a5a00;
-  }
-  * { box-sizing: border-box; }
-  /* Remove blue tap highlight on mobile (same as principal page) */
-  * { -webkit-tap-highlight-color: transparent; }
-  button, tr.row-click { -webkit-user-select: none; user-select: none; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 15px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding-top: env(safe-area-inset-top, 0px);
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Create Payment - Prakash Public School</title>
+    <style>
+      :root {
+        --navy: #141b2d;
+        --navy-2: #1e3a5f;
+        --gold: #c8962e;
+        --bg: #f4f6fa;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --line: #c9d2de;
+        --error: #b42318;
+        --ok: #166534;
+        --ok-bg: #ecfdf3;
+        --warn-bg: #fff8e6;
+        --warn-text: #8a5a00;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      /* Remove blue tap highlight on mobile (same as principal page) */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      button,
+      tr.row-click {
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        font-size: 15px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding-top: env(safe-area-inset-top, 0px);
+      }
 
-  /* Header */
-  .site-head { position: sticky; top: 0; z-index: 50; }
-  .topbar {
-    background: var(--navy);
-    border-bottom: 3px solid var(--gold);
-    color: #fff;
-    padding: 14px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .brand { display: flex; align-items: center; gap: 14px; }
-  .emblem {
-    width: 56px; height: 56px; background: #fff; border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--navy); font-weight: 700; font-size: 22px; font-family: Georgia, serif;
-  }
-  .brand h1 { font-family: Georgia, "Times New Roman", serif; font-size: 22px; font-weight: 600; margin: 0; letter-spacing: .2px; }
-  .brand p { margin: 3px 0 0; font-size: 13px; color: #c9d2e3; }
-  .top-actions { display: flex; gap: 10px; align-items: center; }
-  .btn-outline {
-    background: transparent; color: #fff; border: 1px solid #7d8aa3;
-    padding: 9px 16px; border-radius: 3px; font-size: 14px; cursor: pointer; font-weight: 600;
-  }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-  .btn-gold-outline { border: 1.5px solid var(--gold); color: var(--gold); }
-  .btn-gold-outline:hover { background: var(--gold); color: var(--navy); }
+      /* Header */
+      .site-head {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+      .topbar {
+        background: var(--navy);
+        border-bottom: 3px solid var(--gold);
+        color: #fff;
+        padding: 14px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .emblem {
+        width: 56px;
+        height: 56px;
+        background: #fff;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--navy);
+        font-weight: 700;
+        font-size: 22px;
+        font-family: Georgia, serif;
+      }
+      .brand h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 22px;
+        font-weight: 600;
+        margin: 0;
+        letter-spacing: 0.2px;
+      }
+      .brand p {
+        margin: 3px 0 0;
+        font-size: 13px;
+        color: #c9d2e3;
+      }
+      .top-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .btn-outline {
+        background: transparent;
+        color: #fff;
+        border: 1px solid #7d8aa3;
+        padding: 9px 16px;
+        border-radius: 3px;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn-outline:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .btn-gold-outline {
+        border: 1.5px solid var(--gold);
+        color: var(--gold);
+      }
+      .btn-gold-outline:hover {
+        background: var(--gold);
+        color: var(--navy);
+      }
 
-  /* Tabs */
-  .tabs {
-    background: #fff;
-    border-bottom: 1px solid var(--line);
-    padding: 0 28px;
-    display: flex;
-    gap: 4px;
-  }
-  .tab {
-    background: none; border: none; border-bottom: 3px solid transparent;
-    padding: 16px 18px; font-size: 15px; font-weight: 600; color: var(--muted); cursor: pointer;
-  }
-  .tab.active { color: var(--navy); border-bottom-color: var(--gold); background: rgb(240, 240, 240);}
-  .tab:hover { color: var(--navy); }
+      /* Tabs */
+      .tabs {
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 0 28px;
+        display: flex;
+        gap: 4px;
+      }
+      .tab {
+        background: none;
+        border: none;
+        border-bottom: 3px solid transparent;
+        padding: 16px 18px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .tab.active {
+        color: var(--navy);
+        border-bottom-color: var(--gold);
+        background: rgb(240, 240, 240);
+      }
+      .tab:hover {
+        color: var(--navy);
+      }
 
-  main { flex: 1; padding: 28px 20px 40px; }
-  .wrap { max-width: 1040px; margin: 0 auto; }
+      main {
+        flex: 1;
+        padding: 28px 20px 40px;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+      }
 
-  .page-title { text-align: center; margin: 4px 0 6px; font-size: 28px; font-weight: 700; color: var(--navy); }
-  .page-sub { text-align: center; color: var(--muted); margin: 0 0 24px; }
+      .page-title {
+        text-align: center;
+        margin: 4px 0 6px;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--navy);
+      }
+      .page-sub {
+        text-align: center;
+        color: var(--muted);
+        margin: 0 0 24px;
+      }
 
-  /* Card */
-  .card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(20,27,45,.06);
-  }
-  .card-head {
-    padding: 22px 28px 18px;
-    border-bottom: 1px solid var(--line);
-    display: flex; gap: 14px; align-items: flex-start;
-  }
-  .step-box {
-    width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 3px;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; color: var(--navy); flex-shrink: 0; font-size: 14px;
-  }
-  .card-head h2 { margin: 0; font-size: 16px; letter-spacing: .6px; text-transform: uppercase; color: var(--navy); }
-  .card-head p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+      /* Card */
+      .card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(20, 27, 45, 0.06);
+      }
+      .card-head {
+        padding: 22px 28px 18px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .step-box {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: var(--navy);
+        flex-shrink: 0;
+        font-size: 14px;
+      }
+      .card-head h2 {
+        margin: 0;
+        font-size: 16px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        color: var(--navy);
+      }
+      .card-head p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
 
-  .notice {
-    margin: 20px 28px 0;
-    background: var(--warn-bg);
-    border: 1px solid #f1d27a;
-    color: var(--warn-text);
-    padding: 10px 14px;
-    border-radius: 3px;
-    font-size: 14px;
-    display: flex; gap: 10px; align-items: center;
-  }
-  .notice::before {
-    content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0;
-  }
+      .notice {
+        margin: 20px 28px 0;
+        background: var(--warn-bg);
+        border: 1px solid #f1d27a;
+        color: var(--warn-text);
+        padding: 10px 14px;
+        border-radius: 3px;
+        font-size: 14px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .notice::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--gold);
+        flex-shrink: 0;
+      }
 
-  form { padding: 24px 28px 28px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 36px; }
-  .field label {
-    display: block; font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 7px;
-  }
-  .field label .req { color: var(--error); }
-  .input, .select {
-    width: 100%;
-    height: 44px;
-    border: 1px solid #9aa6b8;
-    border-radius: 3px;
-    padding: 0 12px;
-    font-size: 15px;
-    font-family: inherit;
-    color: var(--text);
-    background: #fff;
-    outline: none;
-  }
-  .input:focus, .select:focus { border-color: var(--navy-2); box-shadow: 0 0 0 3px rgba(30,58,95,.15); }
-  .input::placeholder { color: #8b95a7; }
-  .input[readonly] { background: #f1f4f9; color: var(--muted); }
-  .input.invalid, .select.invalid { border-color: var(--error); background: #fffafa; }
-  .err { color: var(--error); font-size: 13px; margin-top: 6px; min-height: 0; display: none; }
-  .err.show { display: block; }
-  .hint { color: var(--muted); font-size: 12.5px; margin-top: 6px; }
+      form {
+        padding: 24px 28px 28px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px 36px;
+      }
+      .field label {
+        display: block;
+        font-weight: 700;
+        color: var(--navy);
+        font-size: 14px;
+        margin-bottom: 7px;
+      }
+      .field label .req {
+        color: var(--error);
+      }
+      .input,
+      .select {
+        width: 100%;
+        height: 44px;
+        border: 1px solid #9aa6b8;
+        border-radius: 3px;
+        padding: 0 12px;
+        font-size: 15px;
+        font-family: inherit;
+        color: var(--text);
+        background: #fff;
+        outline: none;
+      }
+      .input:focus,
+      .select:focus {
+        border-color: var(--navy-2);
+        box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.15);
+      }
+      .input::placeholder {
+        color: #8b95a7;
+      }
+      .input[readonly] {
+        background: #f1f4f9;
+        color: var(--muted);
+      }
+      .input.invalid,
+      .select.invalid {
+        border-color: var(--error);
+        background: #fffafa;
+      }
+      .err {
+        color: var(--error);
+        font-size: 13px;
+        margin-top: 6px;
+        min-height: 0;
+        display: none;
+      }
+      .err.show {
+        display: block;
+      }
+      .hint {
+        color: var(--muted);
+        font-size: 12.5px;
+        margin-top: 6px;
+      }
 
-  .actions {
-    margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line);
-    display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
-  }
-  .btn-primary {
-    background: var(--navy-2); color: #fff; border: none; border-radius: 3px;
-    padding: 12px 26px; font-size: 15px; font-weight: 600; cursor: pointer;
-  }
-  .btn-primary:hover { background: var(--navy); }
-  .btn-primary:active { transform: translateY(1px); }
-  .input:hover:not(:focus) { border-color: #6f7d95; }
-  .btn-secondary {
-    background: #fff; color: var(--navy); border: 1px solid #9aa6b8; border-radius: 3px;
-    padding: 12px 22px; font-size: 15px; font-weight: 600; cursor: pointer;
-  }
-  .btn-secondary:hover { border-color: var(--navy); }
+      .actions {
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
+        background: var(--navy-2);
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 12px 26px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        background: var(--navy);
+      }
+      .btn-primary:active {
+        transform: translateY(1px);
+      }
+      .input:hover:not(:focus) {
+        border-color: #6f7d95;
+      }
+      .btn-secondary {
+        background: #fff;
+        color: var(--navy);
+        border: 1px solid #9aa6b8;
+        border-radius: 3px;
+        padding: 12px 22px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .btn-secondary:hover {
+        border-color: var(--navy);
+      }
 
-  .toast {
-    margin: 0 28px 0;
-    padding: 12px 16px;
-    border-radius: 3px;
-    border: 1px solid #a6e3bd;
-    background: var(--ok-bg);
-    color: var(--ok);
-    font-weight: 600;
-    display: none;
-  }
-  .toast.show { display: block; margin-top: 20px; }
+      .toast {
+        margin: 0 28px 0;
+        padding: 12px 16px;
+        border-radius: 3px;
+        border: 1px solid #a6e3bd;
+        background: var(--ok-bg);
+        color: var(--ok);
+        font-weight: 600;
+        display: none;
+      }
+      .toast.show {
+        display: block;
+        margin-top: 20px;
+      }
 
-  /* History */
-  .table-wrap { overflow-x: auto; padding: 0 28px 24px; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 20px; }
-  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-  th.col-sn, td.col-sn, th.col-cls, td.col-cls, th.col-roll, td.col-roll, th.col-amt, td.col-amt, th.col-status, td.col-status { white-space: nowrap; }
-  th.col-sn { width: 48px; }
-  th.col-cls, td.col-cls { width: 74px; }
-  th.col-amt, td.col-amt { width: 72px; }
-  th.col-payer, td.col-payer { width: 110px; }
-  /* Fixed history card width and fixed column widths: extra screen width no longer adds empty space */
-  #view-history .card { max-width: 860px; margin: 0 auto; }
-  table { table-layout: fixed; }
-  th.col-sn, td.col-sn { width: 48px; }
-  th.col-dt, td.col-dt { width: 108px; }
-  th.col-cls, td.col-cls { width: 64px; }
-  th.col-stu, td.col-stu { width: 150px; }
-  th.col-roll, td.col-roll { width: 72px; }
-  td.col-roll { text-align: center; }
-  th.col-payer, td.col-payer { width: 130px; }
-  th.col-amt, td.col-amt { width: 80px; }
-  th.col-status, td.col-status { width: 112px; }
-  th.num.col-amt, td.num.col-amt { text-align: center; }
-  .name-text, .name-first, .name-last { display: block; width: 100%; max-width: 100%; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  td.col-stu, td.col-payer { text-align: center; }
-  tbody td { height: 66px; }
-  /* Column widths sized to fit their headers; headers centred over centred body values */
-  th.col-dt { width: 116px; }
-  th.col-stu, td.col-stu { width: 140px; }
-  th.col-roll, td.col-roll { width: 88px; }
-  th.col-payer, td.col-payer { width: 120px; }
-  th.col-amt, td.col-amt { width: 104px; }
-  th.col-stu, th.col-roll, th.col-payer { text-align: center; }
-  th.col-status, td.col-status { width: 112px; }
-  .nowrap { white-space: nowrap; }
-  .sub { display: block; color: var(--muted); font-size: 12.5px; margin-top: 3px; white-space: nowrap; }
-  th { background: #eef2f8; color: var(--navy); font-size: 13px; text-transform: uppercase; letter-spacing: .4px; }
-  td.num { text-align: right; font-variant-numeric: tabular-nums; }
-  .empty { text-align: center; color: var(--muted); padding: 28px 0; }
-  .badge { display: inline-block; background: var(--ok-bg); color: var(--ok); border: 1px solid #a6e3bd; border-radius: 3px; padding: 2px 8px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-  .badge.pending { background: var(--warn-bg); color: var(--warn-text); border-color: #f1d27a; }
-  tr.row-click { cursor: pointer; }
-  tr.row-click:hover td { background: #f7f9fc; }
-  tr.row-click:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+      /* History */
+      .table-wrap {
+        overflow-x: auto;
+        padding: 0 28px 24px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: middle;
+      }
+      th.col-sn,
+      td.col-sn,
+      th.col-cls,
+      td.col-cls,
+      th.col-roll,
+      td.col-roll,
+      th.col-amt,
+      td.col-amt,
+      th.col-status,
+      td.col-status {
+        white-space: nowrap;
+      }
+      th.col-sn {
+        width: 48px;
+      }
+      th.col-cls,
+      td.col-cls {
+        width: 74px;
+      }
+      th.col-amt,
+      td.col-amt {
+        width: 72px;
+      }
+      th.col-payer,
+      td.col-payer {
+        width: 110px;
+      }
+      /* Fixed history card width and fixed column widths: extra screen width no longer adds empty space */
+      #view-history .card {
+        max-width: 860px;
+        margin: 0 auto;
+      }
+      table {
+        table-layout: fixed;
+      }
+      th.col-sn,
+      td.col-sn {
+        width: 48px;
+      }
+      th.col-dt,
+      td.col-dt {
+        width: 108px;
+      }
+      th.col-cls,
+      td.col-cls {
+        width: 64px;
+      }
+      th.col-stu,
+      td.col-stu {
+        width: 150px;
+      }
+      th.col-roll,
+      td.col-roll {
+        width: 72px;
+      }
+      td.col-roll {
+        text-align: center;
+      }
+      th.col-payer,
+      td.col-payer {
+        width: 130px;
+      }
+      th.col-amt,
+      td.col-amt {
+        width: 80px;
+      }
+      th.col-status,
+      td.col-status {
+        width: 112px;
+      }
+      th.num.col-amt,
+      td.num.col-amt {
+        text-align: center;
+      }
+      .name-text,
+      .name-first,
+      .name-last {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      td.col-stu,
+      td.col-payer {
+        text-align: center;
+      }
+      tbody td {
+        height: 66px;
+      }
+      /* Column widths sized to fit their headers; headers centred over centred body values */
+      th.col-dt {
+        width: 116px;
+      }
+      th.col-stu,
+      td.col-stu {
+        width: 140px;
+      }
+      th.col-roll,
+      td.col-roll {
+        width: 88px;
+      }
+      th.col-payer,
+      td.col-payer {
+        width: 120px;
+      }
+      th.col-amt,
+      td.col-amt {
+        width: 104px;
+      }
+      th.col-stu,
+      th.col-roll,
+      th.col-payer {
+        text-align: center;
+      }
+      th.col-status,
+      td.col-status {
+        width: 112px;
+      }
+      .nowrap {
+        white-space: nowrap;
+      }
+      .sub {
+        display: block;
+        color: var(--muted);
+        font-size: 12.5px;
+        margin-top: 3px;
+        white-space: nowrap;
+      }
+      th {
+        background: #eef2f8;
+        color: var(--navy);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+      td.num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .empty {
+        text-align: center;
+        color: var(--muted);
+        padding: 28px 0;
+      }
+      .badge {
+        display: inline-block;
+        background: var(--ok-bg);
+        color: var(--ok);
+        border: 1px solid #a6e3bd;
+        border-radius: 3px;
+        padding: 2px 8px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .badge.pending {
+        background: var(--warn-bg);
+        color: var(--warn-text);
+        border-color: #f1d27a;
+      }
+      tr.row-click {
+        cursor: pointer;
+      }
+      tr.row-click:hover td {
+        background: #f7f9fc;
+      }
+      tr.row-click:focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: -2px;
+      }
 
-  /* Read-only detail popup */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(20,27,45,.55); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
-  .modal-card { background: #fff; width: 100%; max-width: 600px; max-height: calc(100vh - 32px); overflow: hidden; border-radius: 4px; box-shadow: 0 10px 30px rgba(20,27,45,.25); display: flex; flex-direction: column; }
-  .modal-head { flex-shrink: 0; padding: 18px 22px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 14px; }
-  .modal-title { flex: 1; min-width: 0; }
-  .modal-title h2 { margin: 0; font-size: 16px; letter-spacing: .6px; text-transform: uppercase; color: var(--navy); }
-  .modal-title p { margin: 3px 0 0; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
-  .icon-close { width: 36px; height: 36px; border: 1px solid var(--line); background: #fff; border-radius: 3px; cursor: pointer; font-size: 14px; color: var(--navy); flex-shrink: 0; }
-  .icon-close:hover { border-color: var(--navy); }
-  .modal-body { flex: 1; min-height: 0; overflow-y: auto; padding: 0 22px 8px; }
-  .modal-foot { flex-shrink: 0; padding: 16px 22px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; }
-  .det-notice { margin-top: 16px; background: var(--warn-bg); border: 1px solid #f1d27a; color: var(--warn-text); padding: 10px 14px; border-radius: 3px; font-size: 13.5px; }
-  .det-section { margin: 20px 0 12px; font-size: 13px; font-weight: 700; color: var(--navy); letter-spacing: .5px; text-transform: uppercase; }
-  .det-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
-  .det-field label { display: block; font-weight: 700; color: var(--navy); font-size: 13px; margin-bottom: 6px; }
-  .det-val { border: 1px solid #d5dce6; background: #f1f4f9; border-radius: 3px; padding: 10px 12px; font-size: 15px; color: var(--text); min-height: 42px; }
-  .det-val.ok { background: var(--ok-bg); border-color: #a6e3bd; color: var(--ok); font-weight: 600; }
-  .det-val.pending { background: var(--warn-bg); border-color: #f1d27a; color: var(--warn-text); font-weight: 600; }
+      /* Read-only detail popup */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 27, 45, 0.55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        z-index: 100;
+      }
+      .modal-card {
+        background: #fff;
+        width: 100%;
+        max-width: 600px;
+        max-height: calc(100vh - 32px);
+        overflow: hidden;
+        border-radius: 4px;
+        box-shadow: 0 10px 30px rgba(20, 27, 45, 0.25);
+        display: flex;
+        flex-direction: column;
+      }
+      .modal-head {
+        flex-shrink: 0;
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .modal-title {
+        flex: 1;
+        min-width: 0;
+      }
+      .modal-title h2 {
+        margin: 0;
+        font-size: 16px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        color: var(--navy);
+      }
+      .modal-title p {
+        margin: 3px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        overflow-wrap: anywhere;
+      }
+      .icon-close {
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--line);
+        background: #fff;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+        color: var(--navy);
+        flex-shrink: 0;
+      }
+      .icon-close:hover {
+        border-color: var(--navy);
+      }
+      .modal-body {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 0 22px 8px;
+      }
+      .modal-foot {
+        flex-shrink: 0;
+        padding: 16px 22px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        justify-content: flex-end;
+      }
+      .det-notice {
+        margin-top: 16px;
+        background: var(--warn-bg);
+        border: 1px solid #f1d27a;
+        color: var(--warn-text);
+        padding: 10px 14px;
+        border-radius: 3px;
+        font-size: 13.5px;
+      }
+      .det-section {
+        margin: 20px 0 12px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--navy);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+      .det-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 18px;
+      }
+      .det-field label {
+        display: block;
+        font-weight: 700;
+        color: var(--navy);
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+      .det-val {
+        border: 1px solid #d5dce6;
+        background: #f1f4f9;
+        border-radius: 3px;
+        padding: 10px 12px;
+        font-size: 15px;
+        color: var(--text);
+        min-height: 42px;
+      }
+      .det-val.ok {
+        background: var(--ok-bg);
+        border-color: #a6e3bd;
+        color: var(--ok);
+        font-weight: 600;
+      }
+      .det-val.pending {
+        background: var(--warn-bg);
+        border-color: #f1d27a;
+        color: var(--warn-text);
+        font-weight: 600;
+      }
 
-  .hidden { display: none !important; }
+      .hidden {
+        display: none !important;
+      }
 
-  /* Footer */
-  footer {
-    background: var(--navy);
-    color: #c9d2e3;
-    border-top: 3px solid var(--gold);
-    padding: 16px 28px;
-    font-size: 13px;
-    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-  }
+      /* Footer */
+      footer {
+        background: var(--navy);
+        color: #c9d2e3;
+        border-top: 3px solid var(--gold);
+        padding: 16px 28px;
+        font-size: 13px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      }
 
-  @media (max-width: 720px) {
-    .grid { grid-template-columns: 1fr; }
-    .topbar { padding: 10px 14px; border-bottom-width: 2px; gap: 10px; }
-    .brand { gap: 12px; }
-    .emblem { width: 38px; height: 38px; font-size: 14px; border-radius: 3px; }
-    .brand h1 { font-size: 19px; }
-    .brand p { display: none; }
-    .top-actions { gap: 8px; }
-    .top-actions .btn-outline { font-size: 13px; padding: 7px 14px; }
-    .tabs { padding: 0 12px; overflow-x: auto; }
-    form, .card-head { padding-left: 18px; padding-right: 18px; }
-    .notice { margin: 16px 18px 0; }
-    .table-wrap { padding: 0 18px 20px; }
-    .toast { margin: 0 18px; }
-    .col-opt { display: none; }
-    /* Mobile: auto column sizing, student name takes the remaining width */
-    table { table-layout: auto; }
-    th[class*="col-"], td[class*="col-"] { width: auto; }
-    td.col-stu .name-text, td.col-stu .name-first, td.col-stu .name-last { width: 0; min-width: 100%; }
-    .det-grid { grid-template-columns: 1fr; }
-  }
+      @media (max-width: 720px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .topbar {
+          padding: 10px 14px;
+          border-bottom-width: 2px;
+          gap: 10px;
+        }
+        .brand {
+          gap: 12px;
+        }
+        .emblem {
+          width: 38px;
+          height: 38px;
+          font-size: 14px;
+          border-radius: 3px;
+        }
+        .brand h1 {
+          font-size: 19px;
+        }
+        .brand p {
+          display: none;
+        }
+        .top-actions {
+          gap: 8px;
+        }
+        .top-actions .btn-outline {
+          font-size: 13px;
+          padding: 7px 14px;
+        }
+        .tabs {
+          padding: 0 12px;
+          overflow-x: auto;
+        }
+        form,
+        .card-head {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+        .notice {
+          margin: 16px 18px 0;
+        }
+        .table-wrap {
+          padding: 0 18px 20px;
+        }
+        .toast {
+          margin: 0 18px;
+        }
+        .col-opt {
+          display: none;
+        }
+        /* Mobile: auto column sizing, student name takes the remaining width */
+        table {
+          table-layout: auto;
+        }
+        th[class*="col-"],
+        td[class*="col-"] {
+          width: auto;
+        }
+        td.col-stu .name-text,
+        td.col-stu .name-first,
+        td.col-stu .name-last {
+          width: 0;
+          min-width: 100%;
+        }
+        .det-grid {
+          grid-template-columns: 1fr;
+        }
+      }
 
-  /* Very small phones (320-380px): compact header, same as principal page */
-  @media (max-width: 380px) {
-    .topbar { padding-left: 10px; padding-right: 10px; }
-    .brand { gap: 8px; min-width: 0; }
-    .emblem { width: 32px; height: 32px; font-size: 12px; }
-    .brand h1 { font-size: 15px; }
-    .top-actions { gap: 6px; }
-    .top-actions .btn-outline { padding: 6px 9px; font-size: 12px; }
-  }
-  a.tab { text-decoration: none; }
-  /* ===== Header (from header-only.html) ===== */
-  /* ===== DESKTOP (generated file values, used above 720px) ===== */
-  .site-head { position: sticky; top: 0; z-index: 50; }
-  .topbar {
-    background: var(--navy);
-    border-bottom: 3px solid var(--gold);
-    color: #fff;
-    padding: 14px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .brand { display: flex; align-items: center; gap: 14px; }
-  .emblem {
-    width: 56px; height: 56px; background: #fff; border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--navy); font-weight: 700; font-size: 22px; font-family: Georgia, serif;
-  }
-  .brand h1 { font-family: Georgia, "Times New Roman", serif; font-size: 22px; font-weight: 600; margin: 0; letter-spacing: .2px; }
-  .brand p { margin: 3px 0 0; font-size: 13px; color: #c9d2e3; }
-  .top-actions { display: flex; gap: 10px; align-items: center; }
-  .btn-outline {
-    background: transparent; color: #fff; border: 1px solid #7d8aa3;
-    padding: 10px 16px; border-radius: 3px; font-size: 14px; cursor: pointer; font-weight: 600;
-  }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-  .btn-gold-outline { border: 1.5px solid var(--gold); color: var(--gold); }
-  .btn-gold-outline:hover { background: var(--gold); color: var(--navy); }
+      /* Very small phones (320-380px): compact header, same as principal page */
+      @media (max-width: 380px) {
+        .topbar {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+        .brand {
+          gap: 8px;
+          min-width: 0;
+        }
+        .emblem {
+          width: 32px;
+          height: 32px;
+          font-size: 12px;
+        }
+        .brand h1 {
+          font-size: 15px;
+        }
+        .top-actions {
+          gap: 6px;
+        }
+        .top-actions .btn-outline {
+          padding: 6px 9px;
+          font-size: 12px;
+        }
+      }
+      a.tab {
+        text-decoration: none;
+      }
+      /* ===== Header (from header-only.html) ===== */
+      /* ===== DESKTOP (generated file values, used above 720px) ===== */
+      .site-head {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+      .topbar {
+        background: var(--navy);
+        border-bottom: 3px solid var(--gold);
+        color: #fff;
+        padding: 14px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .emblem {
+        width: 56px;
+        height: 56px;
+        background: #fff;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--navy);
+        font-weight: 700;
+        font-size: 22px;
+        font-family: Georgia, serif;
+      }
+      .brand h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 22px;
+        font-weight: 600;
+        margin: 0;
+        letter-spacing: 0.2px;
+      }
+      .brand p {
+        margin: 3px 0 0;
+        font-size: 13px;
+        color: #c9d2e3;
+      }
+      .top-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .btn-outline {
+        background: transparent;
+        color: #fff;
+        border: 1px solid #7d8aa3;
+        padding: 10px 16px;
+        border-radius: 3px;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn-outline:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .btn-gold-outline {
+        border: 1.5px solid var(--gold);
+        color: var(--gold);
+      }
+      .btn-gold-outline:hover {
+        background: var(--gold);
+        color: var(--navy);
+      }
 
-  .tabs {
-    background: #fff;
-    border-bottom: 1px solid var(--line);
-    padding: 0 28px;
-    display: flex;
-    gap: 4px;
-  }
-  .tab {
-    background: none; border: none; border-bottom: 3px solid transparent;
-    padding: 16px 18px; font-size: 15px; font-weight: 600; color: var(--muted); cursor: pointer;
-  }
-  .tab.active { color: var(--navy); border-bottom-color: var(--gold); }
-  .tab:hover { color: var(--navy); }
+      .tabs {
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 0 28px;
+        display: flex;
+        gap: 4px;
+      }
+      .tab {
+        background: none;
+        border: none;
+        border-bottom: 3px solid transparent;
+        padding: 16px 18px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .tab.active {
+        color: var(--navy);
+        border-bottom-color: var(--gold);
+      }
+      .tab:hover {
+        color: var(--navy);
+      }
 
-  /* ===== SMALL SCREEN (principal file values, 720px and below) ===== */
-  @media (max-width: 720px) {
-    .topbar { padding: 10px 14px; border-bottom: 2px solid var(--gold); gap: 12px; }
-    .brand { gap: 12px; }
-    .emblem { width: 38px; height: 38px; font-size: 14px; border-radius: 3px; }
-    .brand h1 { font-size: 19px; line-height: 1.2; margin: 0; }
-    .brand p { display: none; }
-    .top-actions { gap: 8px; }
-    .top-actions .btn-outline { font-size: 13px; padding: 8px 14px; }
-    .btn-outline:not(.btn-gold-outline) { border-color: #667088; }
-    .btn-gold-outline { border-width: 1px; }
-    .tabs { padding: 0 14px; overflow-x: auto; }
-    .tab { font-size: 14px; padding: 12px 16px 10px; border-bottom-width: 2px; }
-  }
+      /* ===== SMALL SCREEN (principal file values, 720px and below) ===== */
+      @media (max-width: 720px) {
+        .topbar {
+          padding: 10px 14px;
+          border-bottom: 2px solid var(--gold);
+          gap: 12px;
+        }
+        .brand {
+          gap: 12px;
+        }
+        .emblem {
+          width: 38px;
+          height: 38px;
+          font-size: 14px;
+          border-radius: 3px;
+        }
+        .brand h1 {
+          font-size: 19px;
+          line-height: 1.2;
+          margin: 0;
+        }
+        .brand p {
+          display: none;
+        }
+        .top-actions {
+          gap: 8px;
+        }
+        .top-actions .btn-outline {
+          font-size: 13px;
+          padding: 8px 14px;
+        }
+        .btn-outline:not(.btn-gold-outline) {
+          border-color: #667088;
+        }
+        .btn-gold-outline {
+          border-width: 1px;
+        }
+        .tabs {
+          padding: 0 14px;
+          overflow-x: auto;
+        }
+        .tab {
+          font-size: 14px;
+          padding: 12px 16px 10px;
+          border-bottom-width: 2px;
+        }
+      }
 
-  /* ===== VERY SMALL PHONES (principal file values, 380px and below) ===== */
-  @media (max-width: 380px) {
-    .topbar { padding-left: 10px; padding-right: 10px; gap: 8px; }
-    .brand { gap: 8px; min-width: 0; }
-    .emblem { width: 32px; height: 32px; font-size: 12px; }
-    .brand h1 { font-size: 15px; }
-    .top-actions { gap: 6px; }
-    .top-actions .btn-outline { padding: 7px 9px; font-size: 12px; }
-  }
-  /* ===== Student searchable dropdown ===== */
-  .combo { position: relative; }
-  .combo-list {
-    position: absolute; top: 100%; left: 0; right: 0; z-index: 20;
-    margin-top: 4px; max-height: 240px; overflow-y: auto;
-    background: #fff; border: 1px solid var(--line); border-radius: 4px;
-    box-shadow: 0 6px 16px rgba(20, 27, 45, .12);
-  }
-  .combo-list[hidden] { display: none; }
-  .combo-item { padding: 10px 12px; cursor: pointer; font-size: 15px; color: var(--text); }
-  .combo-item:hover, .combo-item.active { background: #eef2f8; }
-  .combo-empty { padding: 10px 12px; color: var(--muted); font-size: 14px; }
-  .combo.drop-up .combo-list { top: auto; bottom: 100%; margin-top: 0; margin-bottom: 4px; }
-</style>
-</head>
-<body>
-
-<div class="site-head">
-  <header class="topbar">
-    <div class="brand">
-      <div class="emblem">PPS</div>
-      <div>
-        <h1>Prakash Public School</h1>
-        <p>Cash Fee Management System</p>
-      </div>
-    </div>
-    <div class="top-actions">
-      <button class="btn-outline btn-gold-outline" type="button" id="helpBtn">Help / Support</button>
-      <button class="btn-outline" type="button" id="logoutBtn">Logout</button>
-    </div>
-  </header>
-
-  <nav class="tabs" role="tablist">
-    <a class="tab active" type="button" role="tab">Create Payment</a>
-    <a class="tab" href="./payment-history-teacher.html" type="button" role="tab">History &amp; Handover</a>
-  </nav>
-</div>
-
-<main>
-  <div class="wrap">
-
-<!-- CREATE PAYMENT -->
-    <section id="view-create">
-      <h2 class="page-title">Record Cash Fee Payment</h2>
-      <p class="page-sub">Enter the payment details exactly as received at the counter.</p>
-
-      <div class="card">
-        <div class="card-head">
-          <div class="step-box">1</div>
+      /* ===== VERY SMALL PHONES (principal file values, 380px and below) ===== */
+      @media (max-width: 380px) {
+        .topbar {
+          padding-left: 10px;
+          padding-right: 10px;
+          gap: 8px;
+        }
+        .brand {
+          gap: 8px;
+          min-width: 0;
+        }
+        .emblem {
+          width: 32px;
+          height: 32px;
+          font-size: 12px;
+        }
+        .brand h1 {
+          font-size: 15px;
+        }
+        .top-actions {
+          gap: 6px;
+        }
+        .top-actions .btn-outline {
+          padding: 7px 9px;
+          font-size: 12px;
+        }
+      }
+      /* ===== Student searchable dropdown ===== */
+      .combo {
+        position: relative;
+      }
+      .combo-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        margin-top: 4px;
+        max-height: 240px;
+        overflow-y: auto;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        box-shadow: 0 6px 16px rgba(20, 27, 45, 0.12);
+      }
+      .combo-list[hidden] {
+        display: none;
+      }
+      .combo-item {
+        padding: 10px 12px;
+        cursor: pointer;
+        font-size: 15px;
+        color: var(--text);
+      }
+      .combo-item:hover,
+      .combo-item.active {
+        background: #eef2f8;
+      }
+      .combo-empty {
+        padding: 10px 12px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .combo.drop-up .combo-list {
+        top: auto;
+        bottom: 100%;
+        margin-top: 0;
+        margin-bottom: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site-head">
+      <header class="topbar">
+        <div class="brand">
+          <div class="emblem">PPS</div>
           <div>
-            <h2>Payment Details</h2>
-            <p>All fields marked with * are mandatory.</p>
+            <h1>Prakash Public School</h1>
+            <p>Cash Fee Management System</p>
           </div>
         </div>
+        <div class="top-actions">
+          <button
+            class="btn-outline btn-gold-outline"
+            type="button"
+            id="helpBtn"
+          >
+            Help / Support
+          </button>
+          <button class="btn-outline" type="button" id="logoutBtn">
+            Logout
+          </button>
+        </div>
+      </header>
 
-        <div class="notice">Original entry amounts are non-editable after save.</div>
+      <nav class="tabs" role="tablist">
+        <a class="tab active" type="button" role="tab">Create Payment</a>
+        <a
+          class="tab"
+          href="./payment-history-teacher.html"
+          type="button"
+          role="tab"
+          >History &amp; Handover</a
+        >
+      </nav>
+    </div>
 
-        <form id="payForm" novalidate>
-          <div class="grid">
-            <div class="field">
-              <label for="studentName">Student Name <span class="req">*</span></label>
-             <div class="combo">
-  <input class="input" id="studentName" placeholder="Type to search student" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="studentOptions" aria-autocomplete="list">
-  <div class="combo-list" id="studentOptions" role="listbox" hidden></div>
-</div>
-</div>
+    <main>
+      <div class="wrap">
+        <!-- CREATE PAYMENT -->
+        <section id="view-create">
+          <h2 class="page-title">Record Cash Fee Payment</h2>
+          <p class="page-sub">
+            Enter the payment details exactly as received at the counter.
+          </p>
 
-            <div class="field">
-              <label for="fatherName">Father's Name <span class="req">*</span></label>
-              <input class="input" id="fatherName" placeholder="Father's full name">
-              <div class="err" id="err-fatherName">Father's name is required.</div>
+          <div class="card">
+            <div class="card-head">
+              <div class="step-box">1</div>
+              <div>
+                <h2>Payment Details</h2>
+                <p>All fields marked with * are mandatory.</p>
+              </div>
             </div>
 
-            <div class="field">
-              <label for="classSection">Class &amp; Section <span class="req">*</span></label>
-              <select class="select" id="classSection">
-                <option value="">Select Class &amp; Section</option>
-                <option>Nursery - A</option>
-                <option>LKG - A</option>
-                <option>UKG - A</option>
-                <option>Class 1 - A</option>
-                <option>Class 2 - A</option>
-                <option>Class 3 - A</option>
-                <option>Class 4 - A</option>
-                <option>Class 5 - A</option>
-                <option>Class 6 - A</option>
-                <option>Class 7 - A</option>
-                <option>Class 8 - A</option>
-                <option>Class 9 - A</option>
-                <option>Class 10 - A</option>
-              </select>
-              <div class="err" id="err-classSection">Please select class and section.</div>
+            <div class="notice">
+              Original entry amounts are non-editable after save.
             </div>
 
-            <div class="field">
-              <label for="amount">Amount Collected (₹) <span class="req">*</span></label>
-              <input class="input" id="amount" type="number" min="1" step="1" placeholder="e.g. 2500" inputmode="numeric">
-              <div class="err" id="err-amount">Enter a valid amount greater than 0.</div>
-            </div>
+            <form id="payForm" novalidate>
+              <div class="grid">
+                <div class="field">
+                  <label for="studentName"
+                    >Student Name <span class="req">*</span></label
+                  >
+                  <div class="combo">
+                    <input
+                      class="input"
+                      id="studentName"
+                      placeholder="Type to search student"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-controls="studentOptions"
+                      aria-autocomplete="list"
+                    />
+                    <div
+                      class="combo-list"
+                      id="studentOptions"
+                      role="listbox"
+                      hidden
+                    ></div>
+                  </div>
+                </div>
 
-            <div class="field">
-              <label for="rollNo">Roll No. <span class="req">*</span></label>
-              <input class="input" id="rollNo" inputmode="numeric" placeholder="Enter roll no. (auto-filled for known students)" autocomplete="off">
-              <div class="err" id="err-rollNo">Roll number is required.</div>
-              <div class="hint">Auto-filled for known students. You can also type it manually.</div>
-            </div>
+                <div class="field">
+                  <label for="fatherName"
+                    >Father's Name <span class="req">*</span></label
+                  >
+                  <input
+                    class="input"
+                    id="fatherName"
+                    placeholder="Father's full name"
+                  />
+                  <div class="err" id="err-fatherName">
+                    Father's name is required.
+                  </div>
+                </div>
 
-            <div class="field">
-              <label for="payerName">Payer Name <span class="req">*</span></label>
-              <input class="input" id="payerName" placeholder="Name of the person paying">
-              <div class="err" id="err-payerName">Payer name is required.</div>
-            </div>
+                <div class="field">
+                  <label for="classSection"
+                    >Class &amp; Section <span class="req">*</span></label
+                  >
+                  <select class="select" id="classSection">
+                    <option value="">Select Class &amp; Section</option>
+                    <option>Nursery - A</option>
+                    <option>LKG - A</option>
+                    <option>UKG - A</option>
+                    <option>Class 1 - A</option>
+                    <option>Class 2 - A</option>
+                    <option>Class 3 - A</option>
+                    <option>Class 4 - A</option>
+                    <option>Class 5 - A</option>
+                    <option>Class 6 - A</option>
+                    <option>Class 7 - A</option>
+                    <option>Class 8 - A</option>
+                    <option>Class 9 - A</option>
+                    <option>Class 10 - A</option>
+                  </select>
+                  <div class="err" id="err-classSection">
+                    Please select class and section.
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="amount"
+                    >Amount Collected (₹) <span class="req">*</span></label
+                  >
+                  <input
+                    class="input"
+                    id="amount"
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="e.g. 2500"
+                    inputmode="numeric"
+                  />
+                  <div class="err" id="err-amount">
+                    Enter a valid amount greater than 0.
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="rollNo"
+                    >Roll No. <span class="req">*</span></label
+                  >
+                  <input
+                    class="input"
+                    id="rollNo"
+                    inputmode="numeric"
+                    placeholder="Enter roll no. (auto-filled for known students)"
+                    autocomplete="off"
+                  />
+                  <div class="err" id="err-rollNo">
+                    Roll number is required.
+                  </div>
+                  <div class="hint">
+                    Auto-filled for known students. You can also type it
+                    manually.
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="payerName"
+                    >Payer Name <span class="req">*</span></label
+                  >
+                  <input
+                    class="input"
+                    id="payerName"
+                    placeholder="Name of the person paying"
+                  />
+                  <div class="err" id="err-payerName">
+                    Payer name is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn-primary" type="submit">
+                  ✓ Record Cash Payment
+                </button>
+                <button class="btn-secondary" type="button" id="clearBtn">
+                  Clear Form
+                </button>
+              </div>
+            </form>
+
+            <div class="toast" id="toast"></div>
           </div>
-
-          <div class="actions">
-            <button class="btn-primary" type="submit">✓ Record Cash Payment</button>
-            <button class="btn-secondary" type="button" id="clearBtn">Clear Form</button>
-          </div>
-        </form>
-
-        <div class="toast" id="toast"></div>
+        </section>
       </div>
-    </section>
+    </main>
 
-    
-  </div>
-</main>
+    <footer>
+      <span>Prakash Public School • Cash Fee Collection &amp; Handover</span>
+      <span>Strict Traceability Enabled • No Partial Processing</span>
+    </footer>
 
-<footer>
-  <span>Prakash Public School • Cash Fee Collection &amp; Handover</span>
-  <span>Strict Traceability Enabled • No Partial Processing</span>
-</footer>
-
-<script src="./../js/payment-seed.js"></script>
-<script src="./../js/shared.js"></script>
-<script src="./../js/student-combo.js"></script>
-<script src="./../js/create-payment.js"></script>
-</body>
+    <script src="./../js/payment-seed.js"></script>
+    <script src="./../js/shared.js"></script>
+    <script src="./../js/student-combo.js"></script>
+    <script src="./../js/create-payment.js"></script>
+  </body>
 </html>
