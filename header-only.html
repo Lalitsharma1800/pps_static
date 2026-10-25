@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Header - Prakash Public School</title>
+<style>
+  :root {
+    --navy: #141b2d;
+    --navy-2: #1e3a5f;
+    --gold: #c8962e;
+    --bg: #f4f6fa;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --line: #c9d2de;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  /* ===== DESKTOP (generated file values, used above 720px) ===== */
+  .site-head { position: sticky; top: 0; z-index: 50; }
+  .topbar {
+    background: var(--navy);
+    border-bottom: 3px solid var(--gold);
+    color: #fff;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .emblem {
+    width: 56px; height: 56px; background: #fff; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--navy); font-weight: 700; font-size: 22px; font-family: Georgia, serif;
+  }
+  .brand h1 { font-family: Georgia, "Times New Roman", serif; font-size: 22px; font-weight: 600; margin: 0; letter-spacing: .2px; }
+  .brand p { margin: 3px 0 0; font-size: 13px; color: #c9d2e3; }
+  .top-actions { display: flex; gap: 10px; align-items: center; }
+  .btn-outline {
+    background: transparent; color: #fff; border: 1px solid #7d8aa3;
+    padding: 9px 16px; border-radius: 3px; font-size: 14px; cursor: pointer; font-weight: 600;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-gold-outline { border: 1.5px solid var(--gold); color: var(--gold); }
+  .btn-gold-outline:hover { background: var(--gold); color: var(--navy); }
+
+  .tabs {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 0 28px;
+    display: flex;
+    gap: 4px;
+  }
+  .tab {
+    background: none; border: none; border-bottom: 3px solid transparent;
+    padding: 16px 18px; font-size: 15px; font-weight: 600; color: var(--muted); cursor: pointer;
+  }
+  .tab.active { color: var(--navy); border-bottom-color: var(--gold); }
+  .tab:hover { color: var(--navy); }
+
+  /* ===== SMALL SCREEN (principal file values, 720px and below) ===== */
+  @media (max-width: 720px) {
+    .topbar { padding: 10px 14px; border-bottom: 2px solid var(--gold); gap: 12px; }
+    .brand { gap: 12px; }
+    .emblem { width: 38px; height: 38px; font-size: 14px; border-radius: 3px; }
+    .brand h1 { font-size: 19px; line-height: 1.2; margin: 0; }
+    .brand p { display: none; }
+    .top-actions { gap: 8px; }
+    .top-actions .btn-outline { font-size: 13px; padding: 7px 14px; }
+    .btn-outline:not(.btn-gold-outline) { border-color: #667088; }
+    .btn-gold-outline { border-width: 1px; }
+    .tabs { padding: 0 14px; overflow-x: auto; }
+    .tab { font-size: 14px; padding: 12px 16px 10px; border-bottom-width: 2px; }
+  }
+
+  /* ===== VERY SMALL PHONES (principal file values, 380px and below) ===== */
+  @media (max-width: 380px) {
+    .topbar { padding-left: 10px; padding-right: 10px; gap: 8px; }
+    .brand { gap: 8px; min-width: 0; }
+    .emblem { width: 32px; height: 32px; font-size: 12px; }
+    .brand h1 { font-size: 15px; }
+    .top-actions { gap: 6px; }
+    .top-actions .btn-outline { padding: 6px 9px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-head">
+  <header class="topbar">
+    <div class="brand">
+      <div class="emblem">PPS</div>
+      <div>
+        <h1>Prakash Public School</h1>
+        <p>Cash Fee Management System</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="btn-outline btn-gold-outline" type="button">Help / Support</button>
+      <button class="btn-outline" type="button">Logout</button>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" type="button" role="tab">Create Payment</button>
+    <button class="tab" type="button" role="tab">History &amp; Handover</button>
+  </nav>
+</div>
+
+</body>
+</html>
