@@ -220,18 +220,52 @@
 </footer>
 
 <script>
-  // Page to open after a successful login.
-  const NEXT_PAGE = "prakash-history-handover-v10.html";
+  // Where each role lands after login (paths relative to this login page).
+  const ROLE_PAGES = {
+    teacher: "teacher/create-payment.html",
+    principal: "principal/handover-history.html"
+  };
+  const SESSION_KEY = "chf_session";
 
-  // ------------------------------------------------------------------
-  // DEMO ONLY: this accepts any username and password so the design can
-  // be tried out. Replace the body with a real call to your login
-  // backend (it must resolve on success and reject with an Error whose
-  // message is shown to the user on failure) before using this live.
-  // ------------------------------------------------------------------
-  function authenticate(username, password) {
-    return new Promise(resolve => setTimeout(resolve, 700));
+  // Login accounts are read from the shared data file (users[] in data/cash-fee-dummy.json).
+  // Dummy data only: passwords are plain text here and will be checked by the backend later.
+  const DATA_URL = "data/cash-fee-dummy.json";
+  let usersCache = null;
+
+  async function loadUsers() {
+    if (usersCache) return usersCache;
+    const res = await fetch(DATA_URL, { cache: "no-store" });
+    if (!res.ok) throw new Error("Login data could not be loaded.");
+    const data = await res.json();
+    usersCache = data.users || [];
+    return usersCache;
   }
+
+  async function authenticate(username, password) {
+    const users = await loadUsers();
+    const user = users.find(u => u.username.toLowerCase() === username.toLowerCase());
+    if (!user || !user.active || user.password !== password) {
+      throw new Error("Incorrect username or password. Try again.");
+    }
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+      username: user.username, name: user.name, role: user.role, linkedId: user.linkedId
+    }));
+    return user;
+  }
+
+  // Sends the user to the page for their role. Unknown roles stay on the login page.
+  function goToRolePage(role) {
+    const target = ROLE_PAGES[role];
+    if (target) window.location.href = target;
+  }
+
+  // If a user is already logged in (session saved), skip the login form.
+  (function redirectIfLoggedIn() {
+    try {
+      const session = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null");
+      if (session && session.role) goToRolePage(session.role);
+    } catch (e) {}
+  })();
 
   const form = document.getElementById("form");
   const user = document.getElementById("username");
@@ -289,8 +323,8 @@
     submitBtn.disabled = true;
     submitBtn.textContent = "Signing in…";
     try {
-      await authenticate(u, p);
-      window.location.href = NEXT_PAGE;
+      const account = await authenticate(u, p);
+      goToRolePage(account.role);
     } catch (err) {
       showFormError((err && err.message) || "Incorrect username or password. Try again.");
       pass.value = "";
