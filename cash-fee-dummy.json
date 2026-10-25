@@ -14,6 +14,13 @@
       "Teacher-only records (PAY-2026-010..012) have parentPhone = null because the teacher form does not capture it."
     ]
   },
+  "users": [
+  { "id": "U-001", "username": "anil",      "password": "Anil@123",      "name": "Anil Verma",   "role": "teacher",   "linkedId": "t-anil",   "active": true },
+  { "id": "U-002", "username": "meena",     "password": "Meena@123",     "name": "Meena Sharma", "role": "teacher",   "linkedId": "t-meena",  "active": true },
+  { "id": "U-003", "username": "rakesh",    "password": "Rakesh@123",    "name": "Rakesh Yadav", "role": "teacher",   "linkedId": "t-rakesh", "active": true },
+  { "id": "U-004", "username": "sunita",    "password": "Sunita@123",    "name": "Sunita Rao",   "role": "teacher",   "linkedId": "t-sunita", "active": true },
+  { "id": "U-005", "username": "principal", "password": "Principal@123", "name": "Principal",    "role": "principal", "linkedId": "p-001",    "active": true }
+],
   "teachers": [
     {
       "id": "t-anil",
