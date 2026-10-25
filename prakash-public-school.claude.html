@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>History & Handover - Prakash Public School</title>
+<style>
+  :root {
+    --navy: #141b2d;
+    --gold: #d1992b;
+    --bg: #f4f6fa;
+    --card: #ffffff;
+    --line: #e1e5ee;
+    --thead: #e9eef7;
+    --text: #141b2d;
+    --muted: #6a7488;
+    --pending-bg: #fdf1d8;
+    --pending-fg: #8a5a00;
+    --done-bg: #dff3e6;
+    --done-fg: #1c6b3a;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 14px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Roboto, "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    line-height: 1.45;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  .site-head { position: sticky; top: 0; z-index: 10; }
+  .topbar {
+    background: var(--navy);
+    border-bottom: 2px solid var(--gold);
+  }
+  .topbar-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 10px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo {
+    width: 38px; height: 38px;
+    background: #fff; color: var(--navy);
+    border-radius: 3px;
+    display: grid; place-items: center;
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 700; font-size: 14px;
+  }
+  .brand h1 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 19px; font-weight: 700; color: #fff; line-height: 1.2;
+  }
+  .brand p { margin: 1px 0 0; font-size: 12px; color: #b9c1d4; }
+  .actions { display: flex; gap: 8px; }
+  .btn {
+    font: inherit; font-size: 13px; font-weight: 600;
+    padding: 7px 14px; border-radius: 3px; cursor: pointer;
+    background: transparent; border: 1px solid;
+  }
+  .btn-gold { color: var(--gold); border-color: var(--gold); }
+  .btn-gold:hover { background: rgba(209,153,43,.14); }
+  .btn-white { color: #fff; border-color: #667088; }
+  .btn-white:hover { background: rgba(255,255,255,.08); }
+  .btn:focus-visible, .tab:focus-visible, select:focus-visible,
+  .edit-btn:focus-visible, .menu-item:focus-visible {
+    outline: 2px solid var(--gold); outline-offset: 2px;
+  }
+
+  /* Tabs */
+  .tabs { background: #fff; border-bottom: 1px solid var(--line); }
+  .tabs-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    display: flex; gap: 4px; overflow-x: auto;
+  }
+  .tab {
+    font: inherit; font-size: 14px; font-weight: 600;
+    color: var(--muted);
+    background: none; border: 0;
+    border-bottom: 2px solid transparent;
+    padding: 12px 16px 10px;
+    cursor: pointer; white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); border-bottom-color: var(--gold); }
+
+  /* Page */
+  main { flex: 1; width: 100%; max-width: 1200px; margin: 0 auto; padding: 24px 24px 36px; }
+  .page-title { text-align: center; margin-bottom: 18px; }
+  .page-title h2 { margin: 0 0 4px; font-size: 24px; font-weight: 700; }
+  .page-title p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .panel-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; flex-wrap: wrap;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .panel-title { display: flex; align-items: center; gap: 12px; }
+  .num-box {
+    width: 34px; height: 34px;
+    border: 1px solid var(--line); border-radius: 3px;
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 14px;
+  }
+  .panel-title h3 {
+    margin: 0; font-size: 15px; font-weight: 700;
+    letter-spacing: .3px; text-transform: uppercase;
+  }
+  .panel-title .sub { margin-top: 2px; color: var(--muted); font-size: 13px; }
+  .panel-title .sub b { color: var(--text); }
+  .sep { margin: 0 6px; color: #b3bbcb; }
+
+  .filter { display: flex; align-items: center; gap: 8px; }
+  .filter label { font-size: 13px; color: var(--muted); font-weight: 500; }
+  .filter select {
+    font: inherit; font-size: 13px; color: var(--text);
+    background: #fff; border: 1px solid var(--line); border-radius: 3px;
+    padding: 7px 10px; min-width: 150px; cursor: pointer;
+  }
+
+  /* Table (stays a table on every screen size) */
+  .table-wrap { padding: 14px 20px 16px; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  thead th {
+    background: var(--thead);
+    text-align: left;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .5px;
+    padding: 10px 12px;
+    overflow-wrap: anywhere;
+  }
+  thead th.amt, tbody td.amt { text-align: center; }
+  tbody td {
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px; vertical-align: middle;
+    overflow-wrap: anywhere;
+  }
+  .dt .time { display: block; font-weight: 600; }
+  .dt .day { display: block; color: var(--muted); font-size: 12.5px; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: #f8f9fc; }
+  .student { font-weight: 600; }
+  .amt { font-weight: 700; }
+  .muted { color: var(--muted); }
+  .status-cell { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .badge {
+    display: inline-block; padding: 4px 9px; border-radius: 3px;
+    font-size: 12px; font-weight: 700; white-space: nowrap;
+  }
+  .badge.pending { background: var(--pending-bg); color: var(--pending-fg); }
+  .badge.accepted { background: var(--done-bg); color: var(--done-fg); }
+  .edit-btn {
+    width: 26px; height: 26px; padding: 0;
+    display: grid; place-items: center;
+    background: #fff; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 3px; cursor: pointer;
+  }
+  .edit-btn:hover { color: var(--text); border-color: #b9c1d4; }
+  .edit-btn svg { width: 14px; height: 14px; }
+  .empty { text-align: center; color: var(--muted); padding: 36px 0 28px; font-size: 14px; }
+
+  .note { margin: 12px 2px 0; font-size: 12px; color: var(--muted); text-align: center; }
+
+  /* Single-option menu for the edit icon */
+  .menu {
+    position: fixed; z-index: 30;
+    background: #fff; border: 1px solid var(--line); border-radius: 4px;
+    box-shadow: 0 6px 18px rgba(20,27,45,.16);
+    padding: 4px; min-width: 130px;
+  }
+  .menu[hidden] { display: none; }
+  .menu-item {
+    display: flex; align-items: center; gap: 8px; width: 100%;
+    font: inherit; font-size: 13px; font-weight: 600; color: var(--done-fg);
+    background: none; border: 0; border-radius: 3px;
+    padding: 8px 10px; cursor: pointer; text-align: left;
+  }
+  .menu-item:hover { background: var(--done-bg); }
+  .menu-item svg { width: 14px; height: 14px; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+    background: var(--navy); color: #fff; font-size: 13px;
+    padding: 10px 16px; border-radius: 4px; z-index: 40;
+    opacity: 0; pointer-events: none; transition: opacity .2s;
+    max-width: calc(100vw - 32px);
+  }
+  .toast.show { opacity: 1; }
+
+
+  /* Clickable rows */
+  tbody tr[data-id] { cursor: pointer; }
+  tbody tr[data-id]:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+
+  /* Payment details popup */
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 50;
+    background: rgba(20,27,45,.55);
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+  }
+  .modal-backdrop[hidden] { display: none; }
+  .modal {
+    background: #fff; border-radius: 6px;
+    width: 100%; max-width: 640px;
+    max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
+    display: flex; flex-direction: column;
+    box-shadow: 0 16px 48px rgba(20,27,45,.32);
+  }
+  .modal-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 16px 20px; border-bottom: 1px solid var(--line);
+  }
+  .x-btn {
+    flex: none; width: 32px; height: 32px; padding: 0;
+    display: grid; place-items: center;
+    background: #fff; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 3px; cursor: pointer;
+  }
+  .x-btn:hover { color: var(--text); border-color: #b9c1d4; }
+  .x-btn svg { width: 16px; height: 16px; }
+  .x-btn:focus-visible, .close-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .modal-body { padding: 16px 20px 20px; overflow-y: auto; }
+  .banner {
+    display: flex; align-items: center; gap: 10px;
+    background: #fff7e0; border: 1px solid #efdc9a; color: #8a5a00;
+    border-radius: 3px; padding: 9px 12px; font-size: 13px; margin-bottom: 16px;
+  }
+  .banner::before {
+    content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--gold);
+  }
+  .section-h {
+    margin: 4px 0 12px; padding-top: 14px; border-top: 1px solid var(--line);
+    font-size: 13px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;
+  }
+  .section-h.first { border-top: 0; padding-top: 0; }
+  .fields { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 18px; }
+  .field label { display: block; margin-bottom: 5px; font-size: 13px; font-weight: 700; }
+  .field .val {
+    min-height: 38px; padding: 9px 12px;
+    background: #f7f8fb; border: 1px solid var(--line); border-radius: 3px;
+    font-size: 14px; overflow-wrap: anywhere;
+  }
+  .field .val.ok { background: var(--done-bg); border-color: #b9e0c7; color: var(--done-fg); font-weight: 600; }
+  .field .val.warn { background: var(--pending-bg); border-color: #efd9a0; color: var(--pending-fg); font-weight: 600; }
+  .modal-foot {
+    padding: 12px 20px; border-top: 1px solid var(--line);
+    display: flex; justify-content: flex-end;
+  }
+  .close-btn {
+    font: inherit; font-size: 14px; font-weight: 600;
+    background: #fff; color: var(--text);
+    border: 1px solid #b9c1d4; border-radius: 3px;
+    padding: 9px 22px; cursor: pointer;
+  }
+  .close-btn:hover { background: #f4f6fa; }
+  @media (min-width: 640px) {
+    .fields { grid-template-columns: 1fr 1fr; }
+  }
+
+
+  /* Very small phones (320-380px) */
+  @media (max-width: 380px) {
+    .topbar-inner { gap: 8px; padding-left: 10px; padding-right: 10px; }
+    .brand { gap: 8px; min-width: 0; }
+    .logo { width: 32px; height: 32px; font-size: 12px; }
+    .brand h1 { font-size: 15px; }
+    .actions { gap: 6px; }
+    .btn { padding: 6px 9px; font-size: 12px; }
+    .modal-head, .modal-body, .modal-foot { padding-left: 14px; padding-right: 14px; }
+  }
+
+
+  /* Remove the blue flash on tap (mobile browsers) and give our own subtle feedback */
+  * { -webkit-tap-highlight-color: transparent; }
+  button, .tab, tbody tr[data-id], .edit-btn, .menu-item, .x-btn {
+    -webkit-user-select: none; user-select: none;
+    touch-action: manipulation;
+  }
+  button { -webkit-appearance: none; appearance: none; }
+  .btn-gold:active { background: rgba(209,153,43,.24); }
+  .btn-white:active { background: rgba(255,255,255,.16); }
+  .edit-btn:active, .x-btn:active { background: #eef1f7; }
+  .menu-item:active { background: #c9ebd6; }
+  .close-btn:active { background: #e6eaf2; }
+  tbody tr[data-id]:active { background: #eef1f7; }
+
+  footer { background: var(--navy); color: #aab3c8; font-size: 12px; }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto; padding: 12px 24px;
+    display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  }
+  footer b { color: #fff; font-weight: 600; }
+
+  /* Mobile: same table, just tighter */
+  @media (max-width: 720px) {
+    .topbar-inner, .tabs-inner, main, .footer-inner { padding-left: 14px; padding-right: 14px; }
+    .brand p { display: none; }
+    .page-title h2 { font-size: 21px; }
+    .panel-head { padding: 14px; }
+    .table-wrap { padding: 8px 6px 10px; }
+    thead th { padding: 8px 4px; font-size: 10px; letter-spacing: 0; }
+    tbody td { padding: 10px 4px; font-size: 12.5px; }
+    .dt .day { font-size: 11.5px; }
+    .badge { padding: 3px 6px; font-size: 11px; }
+    .status-cell { gap: 4px; }
+    .edit-btn { width: 24px; height: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-head">
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="logo">PPS</div>
+      <div>
+        <h1>Prakash Public School</h1>
+        <p>Cash Fee Management System</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-gold" type="button">Help / Support</button>
+      <button class="btn btn-white" type="button">Logout</button>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs-inner">
+    <button class="tab active" type="button" aria-current="page">History &amp; Handover</button>
+  </div>
+</nav>
+</div>
+
+<main>
+  <div class="page-title">
+    <h2>History &amp; Handover</h2>
+    <p>All cash payments, their handover status and confirmation.</p>
+  </div>
+
+  <section class="panel">
+    <div class="panel-head">
+      <div class="panel-title">
+        <div class="num-box" id="numBox">0</div>
+        <div>
+          <h3>Submitted Payments</h3>
+          <div class="sub">Total collected: <b id="total">₹0</b><span class="sep">|</span>Entries: <b id="entries">0</b></div>
+        </div>
+      </div>
+      <div class="filter">
+        <label for="teacher">Teacher</label>
+        <select id="teacher"></select>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <colgroup>
+          <col style="width:6%">
+          <col style="width:17%">
+          <col style="width:8%">
+          <col style="width:15%">
+          <col style="width:14%">
+          <col style="width:15%">
+          <col style="width:25%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Sn</th>
+            <th>Date &amp; Time</th>
+            <th>Class</th>
+            <th>Student</th>
+            <th class="amt">Amount (₹)</th>
+            <th>Teacher</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="note">Entries cannot be edited or deleted silently. Handovers are confirmed in full, never partially.</p>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span><b>Prakash Public School</b> &nbsp;Cash Fee Management System</span>
+    <span>Every payment is traceable from entry to confirmation.</span>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="modal-head">
+      <div class="panel-title">
+        <div class="num-box" id="mSn">1</div>
+        <div>
+          <h3 id="mTitle">Payment Details</h3>
+          <div class="sub" id="mSub"></div>
+        </div>
+      </div>
+      <button class="x-btn" id="mX" type="button" aria-label="Close payment details">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+    <div class="modal-foot">
+      <button class="close-btn" id="mClose" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="menu" id="menu" role="menu" hidden>
+  <button class="menu-item" id="acceptBtn" type="button" role="menuitem">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    Accepted
+  </button>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  // Add more records here; the table, totals and teacher filter update automatically.
+  // status: "pending" | "accepted"
+  const payments = [
+    { id: "PAY-2026-009", student: "Aarav Mehta",   father: "Sanjay Mehta",   roll: "14", cls: "3-B", amount: 1500, payer: "Sanjay Mehta",   ref: "RCT-20261025-0009", phone: "+91 98765 41009", by: "Anil Verma",   at: "2026-10-25T09:20:00", acceptedAt: null, status: "pending" },
+    { id: "PAY-2026-008", student: "Ananya Gupta",  father: "Rajesh Gupta",   roll: "07", cls: "5-A", amount: 2200, payer: "Neha Gupta",     ref: "RCT-20261024-0008", phone: "+91 98765 41008", by: "Meena Sharma", at: "2026-10-24T14:45:00", acceptedAt: null, status: "pending" },
+    { id: "PAY-2026-007", student: "Rohan Kumar",   father: "Vinod Kumar",    roll: "22", cls: "2-C", amount: 1200, payer: "Vinod Kumar",    ref: "RCT-20261024-0007", phone: "+91 98765 41007", by: "Anil Verma",   at: "2026-10-24T10:05:00", acceptedAt: null, status: "pending" },
+    { id: "PAY-2026-006", student: "Priya Singh",   father: "Mahesh Singh",   roll: "03", cls: "4-A", amount: 3500, payer: "Mahesh Singh",   ref: "RCT-20261023-0006", phone: "+91 98765 41006", by: "Rakesh Yadav", at: "2026-10-23T15:30:00", acceptedAt: null, status: "pending" },
+    { id: "PAY-2026-005", student: "Kabir Singh",   father: "Harpal Singh",   roll: "11", cls: "1-A", amount: 5000, payer: "Harpal Singh",   ref: "RCT-20261023-0005", phone: "+91 98765 41005", by: "Sunita Rao",   at: "2026-10-23T11:15:00", acceptedAt: null, status: "pending" },
+    { id: "PAY-2026-004", student: "Ishita Jain",   father: "Anil Jain",      roll: "18", cls: "6-B", amount: 2800, payer: "Anil Jain",      ref: "RCT-20261022-0004", phone: "+91 98765 41004", by: "Meena Sharma", at: "2026-10-22T12:10:00", acceptedAt: "2026-10-22T16:30:00", status: "accepted" },
+    { id: "PAY-2026-003", student: "Vivaan Sharma", father: "Deepak Sharma",  roll: "09", cls: "1-B", amount: 1800, payer: "Pooja Sharma",   ref: "RCT-20261021-0003", phone: "+91 98765 41003", by: "Sunita Rao",   at: "2026-10-21T10:40:00", acceptedAt: "2026-10-21T14:10:00", status: "accepted" },
+    { id: "PAY-2026-002", student: "Diya Patel",    father: "Kiran Patel",    roll: "05", cls: "3-A", amount: 2500, payer: "Kiran Patel",    ref: "RCT-20261020-0002", phone: "+91 98765 41002", by: "Rakesh Yadav", at: "2026-10-20T13:25:00", acceptedAt: "2026-10-20T16:05:00", status: "accepted" },
+    { id: "PAY-2026-001", student: "Arjun Yadav",   father: "Ramesh Yadav",   roll: "16", cls: "2-A", amount: 1500, payer: "Ramesh Yadav",   ref: "RCT-20261019-0001", phone: "+91 98765 41001", by: "Sunita Rao",   at: "2026-10-19T09:50:00", acceptedAt: "2026-10-19T13:20:00", status: "accepted" }
+  ];
+
+  const fmtTime = iso => new Date(iso).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  const fmtDay = iso => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+
+  const statusLabel = { pending: "Pending", accepted: "Accepted" };
+  const rupees = n => "₹" + n.toLocaleString("en-IN");
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const pencil = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>';
+
+  const select = document.getElementById("teacher");
+  const menu = document.getElementById("menu");
+  const toast = document.getElementById("toast");
+  const teachers = [...new Set(payments.map(p => p.by))];
+  select.innerHTML = '<option value="all">All teachers</option>' +
+    teachers.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join("");
+
+  let currentList = [];
+  let menuFor = null;   // payment id the menu is open for
+  let menuTrigger = null;
+
+  function render() {
+    const f = select.value;
+    const list = payments.filter(p => f === "all" || p.by === f);
+    currentList = list;
+    const total = list.reduce((s, p) => s + p.amount, 0);
+
+    document.getElementById("numBox").textContent = list.length;
+    document.getElementById("entries").textContent = list.length;
+    document.getElementById("total").textContent = rupees(total);
+
+    const body = document.getElementById("rows");
+    if (!list.length) {
+      body.innerHTML = '<tr><td class="empty" colspan="7">No payments recorded yet.</td></tr>';
+      return;
+    }
+    body.innerHTML = list.map((p, i) => `
+      <tr data-id="${esc(p.id)}" tabindex="0" aria-label="View payment details of ${esc(p.student)}">
+        <td class="muted">${i + 1}</td>
+        <td class="dt"><span class="time">${fmtTime(p.at)}</span><span class="day">${fmtDay(p.at)}</span></td>
+        <td>${esc(p.cls)}</td>
+        <td class="student">${esc(p.student)}</td>
+        <td class="amt">${p.amount.toLocaleString("en-IN")}</td>
+        <td>${esc(p.by)}</td>
+        <td>
+          <div class="status-cell">
+            <span class="badge ${p.status}">${statusLabel[p.status]}</span>
+            ${p.status === "pending"
+              ? `<button class="edit-btn" type="button" data-id="${esc(p.id)}" aria-label="Edit status of ${esc(p.student)}" aria-haspopup="menu">${pencil}</button>`
+              : ""}
+          </div>
+        </td>
+      </tr>`).join("");
+  }
+
+  function closeMenu() {
+    menu.hidden = true;
+    menuFor = null;
+    menuTrigger = null;
+  }
+
+  function openMenu(btn) {
+    menuFor = btn.dataset.id;
+    menuTrigger = btn;
+    menu.hidden = false;
+    const r = btn.getBoundingClientRect();
+    const w = menu.offsetWidth;
+    const left = Math.min(Math.max(8, r.right - w), window.innerWidth - w - 8);
+    menu.style.left = left + "px";
+    menu.style.top = (r.bottom + 4) + "px";
+    document.getElementById("acceptBtn").focus();
+  }
+
+  let toastTimer;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+  }
+
+  document.getElementById("rows").addEventListener("click", e => {
+    const btn = e.target.closest(".edit-btn");
+    if (!btn) return;
+    e.stopPropagation();
+    if (menuFor === btn.dataset.id && !menu.hidden) closeMenu(); else openMenu(btn);
+  });
+
+  document.getElementById("acceptBtn").addEventListener("click", () => {
+    const p = payments.find(x => x.id === menuFor);
+    if (p) {
+      p.status = "accepted";
+      p.acceptedAt = new Date().toISOString();
+      showToast(p.student + "'s payment marked as Accepted");
+    }
+    closeMenu();
+    render();
+  });
+
+  document.addEventListener("click", e => { if (!menu.hidden && !menu.contains(e.target)) closeMenu(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && !menu.hidden) { const t = menuTrigger; closeMenu(); if (t) t.focus(); }
+  });
+  window.addEventListener("resize", closeMenu);
+  window.addEventListener("scroll", closeMenu, true);
+
+
+  // ---- Payment details popup ----
+  const modal = document.getElementById("modal");
+  let modalTrigger = null;
+  const fmtFull = iso => fmtDay(iso) + ", " + fmtTime(iso);
+
+  function field(label, value, cls) {
+    return `<div class="field"><label>${label}</label><div class="val ${cls || ""}">${value}</div></div>`;
+  }
+
+  function openModal(id, trigger) {
+    const p = payments.find(x => x.id === id);
+    if (!p) return;
+    modalTrigger = trigger;
+    const sn = currentList.indexOf(p) + 1;
+    document.getElementById("mSn").textContent = sn || "";
+    document.getElementById("mSub").textContent = p.id;
+
+    const verified = p.acceptedAt
+      ? field("Handover Accepted At", esc(fmtFull(p.acceptedAt)), "ok")
+      : field("Handover Accepted At", "Not verified by principal", "warn");
+
+    document.getElementById("mBody").innerHTML = `
+      <div class="banner">Original entry amounts are non-editable after save.</div>
+      <div class="section-h first">Payment</div>
+      <div class="fields">
+        ${field("Student Name", esc(p.student))}
+        ${field("Father's Name", esc(p.father))}
+        ${field("Class &amp; Section", "Class " + esc(p.cls))}
+        ${field("Amount Collected (₹)", p.amount.toLocaleString("en-IN"))}
+        ${field("Roll No.", esc(p.roll))}
+        ${field("Payer Name", esc(p.payer))}
+      </div>
+      <div class="section-h">Receipt &amp; verification</div>
+      <div class="fields">
+        ${field("Payment Ref. No.", esc(p.ref))}
+        ${field("Parent Phone (fee received SMS sent)", esc(p.phone))}
+        ${field("Recorded By (Teacher)", esc(p.by))}
+        ${field("Recorded On", esc(fmtFull(p.at)))}
+        ${verified}
+      </div>`;
+
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    document.getElementById("mClose").focus();
+  }
+
+  function closeModal() {
+    if (modal.hidden) return;
+    modal.hidden = true;
+    document.body.style.overflow = "";
+    if (modalTrigger && document.contains(modalTrigger)) modalTrigger.focus();
+    modalTrigger = null;
+  }
+
+  document.getElementById("rows").addEventListener("click", e => {
+    if (e.target.closest(".edit-btn")) return;
+    const tr = e.target.closest("tr[data-id]");
+    if (tr) openModal(tr.dataset.id, tr);
+  });
+  document.getElementById("rows").addEventListener("keydown", e => {
+    const tr = e.target.closest("tr[data-id]");
+    if (tr && e.target === tr && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      openModal(tr.dataset.id, tr);
+    }
+  });
+  document.getElementById("mX").addEventListener("click", closeModal);
+  document.getElementById("mClose").addEventListener("click", closeModal);
+  modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+  select.addEventListener("change", render);
+  select.value = "all";
+  render();
+</script>
+</body>
+</html>
