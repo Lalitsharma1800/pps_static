@@ -223,13 +223,13 @@
   // Where each role lands after login (paths relative to this login page).
   const ROLE_PAGES = {
     teacher: "teacher/create-payment.html",
-    principal: "principal/handover-history.html"
+    principal: "principal/payment-history.html"
   };
   const SESSION_KEY = "chf_session";
 
   // Login accounts are read from the shared data file (users[] in data/cash-fee-dummy.json).
   // Dummy data only: passwords are plain text here and will be checked by the backend later.
-  const DATA_URL = "data/cash-fee-dummy.json";
+  const DATA_URL = "cash-fee-dummy.json";
   let usersCache = null;
 
   async function loadUsers() {
